@@ -1,9 +1,10 @@
 import * as Icon from "react-native-feather";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
+import Categories from "../components/categories";
 
 function HomeScreen() {
   return (
@@ -23,6 +24,14 @@ function HomeScreen() {
           <Icon.Sliders height="20" strokeWidth={2.5} stroke="white" />
         </View>
       </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: 50,
+        }}
+      >
+        <Categories />
+      </ScrollView>
     </SafeAreaView>
   );
 }
