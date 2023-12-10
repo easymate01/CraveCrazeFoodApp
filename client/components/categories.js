@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { categories } from "../constants";
+import { themeColors } from "../theme";
 // import { getCategories } from "../api";
 // import { urlFor } from "../sanity";
 // import { themeColors } from "../theme";
 
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
-  const [categories, setCategories] = useState([]);
 
   //   useEffect(() => {
   //     getCategories().then((data) => {
@@ -16,15 +17,40 @@ export default function Categories() {
 
   return (
     <View style={{ marginTop: 4 }}>
-      <Text>Categories</Text>
-      {/* <ScrollView
+      <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 15,
         }}
       >
-        {categories.map((category) => {
+        {categories.map((category, index) => {
+          return (
+            <View
+              key={index}
+              style={{
+                marginRight: 6,
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  padding: 2,
+                  borderRadius: 30,
+                  backgroundColor: "gray",
+                }}
+              >
+                <Image
+                  style={{ width: 45, height: 45 }}
+                  source={category.image}
+                />
+                <Text>{category.name}</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        })}
+        {/* {categories.map((category) => {
           const isActive = category._id === activeCategory;
           const btnBackgroundColor = isActive
             ? themeColors.gray600
@@ -70,8 +96,8 @@ export default function Categories() {
               </Text>
             </View>
           );
-        })}
-      </ScrollView> */}
+        })} */}
+      </ScrollView>
     </View>
   );
 }
