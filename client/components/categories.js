@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { categories } from "../constants";
-import { themeColors } from "../theme";
 
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
-
   return (
     <View style={styles.container}>
       <ScrollView
@@ -24,8 +22,12 @@ export default function Categories() {
             >
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={styles.buttonStyle}
-                onPress={() => setActiveCategory(category._id)}
+                style={
+                  activeCategory == category.id
+                    ? styles.activeButtonStyle
+                    : styles.buttonStyle
+                }
+                onPress={() => setActiveCategory(category.id)}
               >
                 <Image style={styles.image} source={category.image} />
               </TouchableOpacity>
@@ -53,11 +55,16 @@ const styles = {
     height: 45,
   },
   buttonStyle: {
-    backgroundColor: "#bebec2",
+    backgroundColor: "#dcdcde",
     borderRadius: 30,
     padding: 10,
   },
   textStyle: {
     fontSize: 16,
+  },
+  activeButtonStyle: {
+    backgroundColor: "#3b3b3b",
+    borderRadius: 30,
+    padding: 10,
   },
 };
