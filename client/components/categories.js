@@ -2,102 +2,62 @@ import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { categories } from "../constants";
 import { themeColors } from "../theme";
-// import { getCategories } from "../api";
-// import { urlFor } from "../sanity";
-// import { themeColors } from "../theme";
 
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
 
-  //   useEffect(() => {
-  //     getCategories().then((data) => {
-  //       setCategories(data);
-  //     });
-  //   }, []);
-
   return (
-    <View style={{ marginTop: 4 }}>
+    <View style={styles.container}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingHorizontal: 15,
-        }}
+        contentContainerStyle={styles.scrollView}
       >
         {categories.map((category, index) => {
           return (
             <View
               key={index}
               style={{
-                marginRight: 6,
-                flex: 1,
-                justifyContent: "center",
+                ...styles.categoryContainer,
+                marginRight: index === categories.length - 1 ? 15 : 6,
               }}
             >
               <TouchableOpacity
-                style={{
-                  padding: 2,
-                  borderRadius: 30,
-                  backgroundColor: "gray",
-                }}
+                activeOpacity={0.8}
+                style={styles.buttonStyle}
+                onPress={() => setActiveCategory(category._id)}
               >
-                <Image
-                  style={{ width: 45, height: 45 }}
-                  source={category.image}
-                />
-                <Text>{category.name}</Text>
+                <Image style={styles.image} source={category.image} />
               </TouchableOpacity>
+              <Text style={[styles.textStyle]}>{category.name}</Text>
             </View>
           );
         })}
-        {/* {categories.map((category) => {
-          const isActive = category._id === activeCategory;
-          const btnBackgroundColor = isActive
-            ? themeColors.gray600
-            : themeColors.gray200;
-          const textFontWeight = isActive ? "bold" : "normal";
-          const textColor = isActive
-            ? themeColors.gray800
-            : themeColors.gray500;
-
-          return (
-            <View key={category._id} style={{ marginRight: 6 }}>
-              <TouchableOpacity
-                onPress={() => setActiveCategory(category._id)}
-                style={{
-                  padding: 1,
-                  borderRadius: 999,
-                  shadowColor: themeColors.shadow,
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-                  backgroundColor: btnBackgroundColor,
-                }}
-              >
-                <Image
-                  style={{ width: 45, height: 45 }}
-                  source={{
-                    uri: urlFor(category.image).url(),
-                  }}
-                />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: textFontWeight,
-                  color: textColor,
-                  marginTop: 4,
-                }}
-              >
-                {category.name}
-              </Text>
-            </View>
-          );
-        })} */}
       </ScrollView>
     </View>
   );
 }
+
+const styles = {
+  container: {
+    marginTop: 4,
+  },
+  scrollView: {
+    paddingHorizontal: 15,
+  },
+  categoryContainer: {
+    marginRight: 6,
+  },
+  image: {
+    width: 45,
+    height: 45,
+  },
+  buttonStyle: {
+    backgroundColor: "#bebec2",
+    borderRadius: 30,
+    padding: 10,
+  },
+  textStyle: {
+    fontSize: 16,
+  },
+};

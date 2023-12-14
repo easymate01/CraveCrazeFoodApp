@@ -75,11 +75,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     borderColor: "gray",
   },
-  // locationIcon: {
-  //   height: 20,
-  //   width: 20,
-  //   stroke: "gray",
-  // },
   locationText: {
     color: "gray",
   },
