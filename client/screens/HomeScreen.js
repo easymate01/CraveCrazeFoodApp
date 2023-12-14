@@ -9,23 +9,16 @@ import FeaturedRow from "../components/featuredRow";
 import { featured } from "../constants";
 
 function HomeScreen() {
-  const [searchedLocation, setSearchedLocation] = useState("Budapest");
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={styles.searchBarContainer} />
       <View style={styles.searchBarContainer}>
         <View style={styles.searchInputContainer}>
           <Icon.Search height="25" stroke="gray" />
-          <TextInput
-            placeholder="Restaurants"
-            value={searchedLocation}
-            onChangeText={setSearchedLocation}
-            style={styles.searchInput}
-          />
+          <TextInput placeholder="Restaurants" style={styles.searchInput} />
           <View style={styles.locationContainer}>
             <Icon.MapPin height="20" width="20" stroke="gray" />
-            <Text style={styles.locationText}>{searchedLocation}</Text>
+            <Text style={styles.locationText}>Budapest</Text>
           </View>
         </View>
 

@@ -21,23 +21,14 @@ export default function RestaurantCard({
   //   lng,
   //   lat,
 }) {
+  const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
-    //   onPress={() => {
-    //     navigation.navigate("Resturant", {
-    //       id,
-    //       title,
-    //       imgUrl,
-    //       rating,
-    //       type,
-    //       address,
-    //       description,
-    //       dishes,
-    //       lng,
-    //       reviews,
-    //       lat,
-    //     });
-    //   }}
+      onPress={() => {
+        navigation.navigate("Resturant", {
+          ...item,
+        });
+      }}
     >
       <View style={styles.container}>
         <Image style={styles.image} source={item.image} />
