@@ -1,7 +1,7 @@
 import * as Icon from "react-native-feather";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import Categories from "../components/categories";
@@ -9,16 +9,23 @@ import FeaturedRow from "../components/featuredRow";
 import { featured } from "../constants";
 
 function HomeScreen() {
+  const [searchedLocation, setSearchedLocation] = useState("Budapest");
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={styles.searchBarContainer} />
       <View style={styles.searchBarContainer}>
         <View style={styles.searchInputContainer}>
           <Icon.Search height="25" stroke="gray" />
-          <TextInput placeholder="Restaurants" style={styles.searchInput} />
+          <TextInput
+            placeholder="Restaurants"
+            value={searchedLocation}
+            onChangeText={setSearchedLocation}
+            style={styles.searchInput}
+          />
           <View style={styles.locationContainer}>
             <Icon.MapPin height="20" width="20" stroke="gray" />
-            <Text style={styles.locationText}>Budapest</Text>
+            <Text style={styles.locationText}>{searchedLocation}</Text>
           </View>
         </View>
 
