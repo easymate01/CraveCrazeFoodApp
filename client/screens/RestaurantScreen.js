@@ -1,16 +1,28 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { themeColors } from "../theme";
+import * as Icon from "react-native-feather";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
+  const navigation = useNavigation();
   const item = params;
 
   return (
-    <ScrollView>
+    <ScrollView style={{}}>
       <View style={styles.container}>
         <Image style={styles.image} source={item.image} />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
+          <Icon.ArrowLeft
+            strokeWidth={3}
+            stroke={themeColors.bgColor(1)}
+          ></Icon.ArrowLeft>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -27,9 +39,9 @@ const styles = {
   },
   backButton: {
     position: "absolute",
-    top: 14,
-    left: 4,
-    backgroundColor: "gray",
+    top: 45,
+    left: 20,
+    backgroundColor: "white",
     padding: 2,
     borderRadius: 999,
     shadowColor: "black",
