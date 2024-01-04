@@ -28,7 +28,7 @@ const styles = {
       height: 2,
     },
     shadowOpacity: 1,
-    marginBottom: 3,
+    marginBottom: 12,
     marginHorizontal: 2,
   },
   image: {
