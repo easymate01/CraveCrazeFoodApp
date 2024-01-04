@@ -24,6 +24,27 @@ export default function RestaurantScreen() {
           ></Icon.ArrowLeft>
         </TouchableOpacity>
       </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{item.name}</Text>
+        <View style={styles.ratingContainer}>
+          <View style={styles.ratingIconContainer}>
+            <Image
+              source={require("../assets/images/fullStar.png")}
+              style={styles.ratingIcon}
+            />
+            <Text style={styles.ratingText}>
+              <Text style={styles.greenText}>{item.stars}</Text>
+              <Text style={styles.grayText}> ({item.reviews} review)</Text>
+              <Text style={styles.boldGrayText}>{item.category}</Text>
+            </Text>
+          </View>
+          <View style={styles.addressContainer}>
+            <Icon.MapPin color="gray" width={15} height={15} />
+            <Text style={styles.grayText}> Nearby · {item.address}</Text>
+          </View>
+        </View>
+        <Text style={styles.description}>{item.name}</Text>
+      </View>
     </ScrollView>
   );
 }
@@ -53,12 +74,15 @@ const styles = {
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     backgroundColor: "white",
-    marginTop: -12,
+    marginTop: -90,
     paddingTop: 6,
     paddingHorizontal: 5,
   },
   title: {
     fontSize: 24,
+    paddingTop: 15,
+    paddingLeft: 15,
+    paddingBottom: 15,
     fontWeight: "bold",
   },
   ratingContainer: {
