@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
+import DishRow from "../components/dishRow";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
@@ -43,7 +44,13 @@ export default function RestaurantScreen() {
             <Text style={styles.grayText}> Nearby · {item.address}</Text>
           </View>
         </View>
-        <Text style={styles.description}>{item.name}</Text>
+        <Text style={styles.description}>{item.description}</Text>
+      </View>
+      <View style={styles.menuContainer}>
+        <Text style={styles.menuTitle}>Menu</Text>
+        {item.dishes.map((dish, index) => (
+          <DishRow item={{ ...dish }} key={index} />
+        ))}
       </View>
     </ScrollView>
   );
