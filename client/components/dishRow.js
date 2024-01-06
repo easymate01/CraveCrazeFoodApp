@@ -1,5 +1,6 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { themeColors } from "../theme";
 
 export default function DishRow({ item }) {
   return (
@@ -9,6 +10,12 @@ export default function DishRow({ item }) {
         <View style={styles.textContainer}>
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.description}>{item.description}</Text>
+        </View>
+        <View style={styles.priceContainer}>
+          <Text style={styles.price}>${item.price}</Text>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity></TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -66,6 +73,7 @@ const styles = {
   iconContainer: {
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: themeColors.bgColor(1),
   },
   iconButton: {
     padding: 6,
