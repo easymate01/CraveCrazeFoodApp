@@ -1,11 +1,16 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { themeColors } from "../theme";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CartIcon() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Cart")}
+      >
         <View style={styles.badge}>
           <Text style={styles.badgeText}>3</Text>
         </View>
