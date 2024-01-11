@@ -1,8 +1,19 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { themeColors } from "../theme";
+import * as Icon from "react-native-feather";
+import { useDispatch } from "react-redux";
 
 export default function DishRow({ item }) {
+  const [quantity, setQuantity] = useState(0);
+
+  const handleIncrement = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
+  };
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={item.image} />
@@ -14,7 +25,25 @@ export default function DishRow({ item }) {
         <View style={styles.priceContainer}>
           <Text style={styles.price}>${item.price}</Text>
           <View style={styles.iconContainer}>
-            <TouchableOpacity></TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton}>
+              <Icon.Minus
+                onPress={handleDecrement}
+                strokeWidth={2}
+                height={20}
+                width={20}
+                stroke={"white"}
+              ></Icon.Minus>
+            </TouchableOpacity>
+            <Text style={styles.quantity}>{quantity}</Text>
+            <TouchableOpacity style={styles.iconButton}>
+              <Icon.Plus
+                onPress={handleIncrement}
+                strokeWidth={2}
+                height={20}
+                width={20}
+                stroke={"white"}
+              ></Icon.Plus>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -73,14 +102,14 @@ const styles = {
   iconContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: themeColors.bgColor(1),
   },
   iconButton: {
     padding: 6,
     borderRadius: 999,
+    backgroundColor: themeColors.bgColor(1),
     marginRight: 6,
   },
   quantity: {
-    paddingHorizontal: 3,
+    paddingHorizontal: 5,
   },
 };
