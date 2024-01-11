@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React from "react";
 import { featured } from "../constants";
 import { themeColors } from "../theme";
@@ -35,6 +35,36 @@ export default function CartScreen() {
           <Text style={styles.changeText}>Change</Text>
         </TouchableOpacity>
       </View>
+      {/* dishes */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.dishesContainer}
+        contentContainerStyle={{
+          paddingBottom: 50,
+        }}
+      >
+        {restaurant.dishes.map((dish, index) => {
+          return (
+            <View key={index} style={styles.dishItem}>
+              <Text style={styles.quantityText}>2 x </Text>
+              <Image style={styles.dishImage} source={dish.image} />
+              <Text style={styles.dishName}>{dish?.name}</Text>
+              <Text style={styles.dishPrice}>${dish?.price}</Text>
+              <TouchableOpacity
+                style={styles.removeButton}
+                // onPress={() => dispatch(removeFromBasket({ id: dish[0]?.id }))}
+              >
+                <Icon.Minus
+                  strokeWidth={2}
+                  height={20}
+                  width={20}
+                  stroke="white"
+                />
+              </TouchableOpacity>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
@@ -87,5 +117,53 @@ const styles = {
   changeText: {
     color: themeColors.text,
     fontWeight: "bold",
+  },
+  dishesContainer: {
+    backgroundColor: "white",
+    paddingTop: 5,
+    paddingHorizontal: 20,
+  },
+  dishItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginVertical: 5,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 1,
+  },
+  quantityText: {
+    color: themeColors.text,
+    fontWeight: "bold",
+  },
+  dishImage: {
+    paddingLeft: 20,
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+  },
+  dishName: {
+    paddingLeft: 10,
+    flex: 1,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  dishPrice: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#333",
+  },
+  removeButton: {
+    padding: 6,
+    borderRadius: 999,
+    backgroundColor: themeColors.bgColor(1),
   },
 };
