@@ -9,8 +9,9 @@ export default function CartIcon() {
         <View style={styles.badge}>
           <Text style={styles.badgeText}>3</Text>
         </View>
+        <Text style={styles.buttonText}>View Cart</Text>
+        <Text style={styles.totalText}>${23}</Text>
       </TouchableOpacity>
-      <Text>CartIcon</Text>
     </View>
   );
 }
@@ -18,7 +19,7 @@ export default function CartIcon() {
 const styles = {
   container: {
     position: "absolute",
-    bottom: 5,
+    bottom: 25,
     width: "100%",
     zIndex: 50,
   },
@@ -48,6 +49,18 @@ const styles = {
   },
   badgeText: {
     fontSize: 14,
+    fontWeight: "bold",
+    color: "white",
+  },
+  buttonText: {
+    flex: 1,
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
+  totalText: {
+    fontSize: 18,
     fontWeight: "bold",
     color: "white",
   },
