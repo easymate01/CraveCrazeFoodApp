@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 import DishRow from "../components/dishRow";
+import CartIcon from "../components/cartIcon";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
@@ -11,47 +12,50 @@ export default function RestaurantScreen() {
   const item = params;
 
   return (
-    <ScrollView style={{}}>
-      <View style={styles.container}>
-        <Image style={styles.image} source={item.image} />
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Icon.ArrowLeft
-            strokeWidth={3}
-            stroke={themeColors.bgColor(1)}
-          ></Icon.ArrowLeft>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{item.name}</Text>
-        <View style={styles.ratingContainer}>
-          <View style={styles.ratingIconContainer}>
-            <Image
-              source={require("../assets/images/fullStar.png")}
-              style={styles.ratingIcon}
-            />
-            <Text style={styles.ratingText}>
-              <Text style={styles.greenText}>{item.stars}</Text>
-              <Text style={styles.grayText}> ({item.reviews} review)</Text>
-              <Text style={styles.boldGrayText}>{item.category}</Text>
-            </Text>
-          </View>
-          <View style={styles.addressContainer}>
-            <Icon.MapPin color="gray" width={15} height={15} />
-            <Text style={styles.grayText}> Nearby · {item.address}</Text>
-          </View>
+    <View>
+      <CartIcon />
+      <ScrollView>
+        <View style={styles.container}>
+          <Image style={styles.image} source={item.image} />
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <Icon.ArrowLeft
+              strokeWidth={3}
+              stroke={themeColors.bgColor(1)}
+            ></Icon.ArrowLeft>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.description}>{item.description}</Text>
-      </View>
-      <View style={styles.menuContainer}>
-        <Text style={styles.menuTitle}>Menu</Text>
-        {item.dishes.map((dish, index) => (
-          <DishRow item={{ ...dish }} key={index} />
-        ))}
-      </View>
-    </ScrollView>
+        <View style={styles.infoContainer}>
+          <Text style={styles.title}>{item.name}</Text>
+          <View style={styles.ratingContainer}>
+            <View style={styles.ratingIconContainer}>
+              <Image
+                source={require("../assets/images/fullStar.png")}
+                style={styles.ratingIcon}
+              />
+              <Text style={styles.ratingText}>
+                <Text style={styles.greenText}>{item.stars}</Text>
+                <Text style={styles.grayText}> ({item.reviews} review)</Text>
+                <Text style={styles.boldGrayText}>{item.category}</Text>
+              </Text>
+            </View>
+            <View style={styles.addressContainer}>
+              <Icon.MapPin color="gray" width={15} height={15} />
+              <Text style={styles.grayText}> Nearby · {item.address}</Text>
+            </View>
+          </View>
+          <Text style={styles.description}>{item.description}</Text>
+        </View>
+        <View style={styles.menuContainer}>
+          <Text style={styles.menuTitle}>Menu</Text>
+          {item.dishes.map((dish, index) => (
+            <DishRow item={{ ...dish }} key={index} />
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
