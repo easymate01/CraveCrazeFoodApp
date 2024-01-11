@@ -6,8 +6,8 @@ export default function PreparingOrder() {
   const navigation = useNavigation();
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("Home");
-    }, 3000);
+      navigation.navigate("Delivery");
+    }, 2000);
   }, []);
   return (
     <View style={styles.loadingContainer}>

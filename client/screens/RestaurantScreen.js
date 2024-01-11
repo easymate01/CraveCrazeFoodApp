@@ -72,7 +72,7 @@ const styles = {
   },
   backButton: {
     position: "absolute",
-    top: 45,
+    top: 49,
     left: 20,
     backgroundColor: "white",
     padding: 2,

@@ -7,6 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import CartScreen from "./screens/CartScreen";
 import PreparingOrder from "./screens/PreparingOrder";
+import DeliveryScreen from "./screens/DeliveryScreen";
 
 export default function Navigation() {
   return (
@@ -26,6 +27,11 @@ export default function Navigation() {
           name="PreparingOrder"
           options={{ presentation: "fullScreenModal" }}
           component={PreparingOrder}
+        />
+        <Stack.Screen
+          name="Delivery"
+          options={{ presentation: "fullScreenModal" }}
+          component={DeliveryScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
