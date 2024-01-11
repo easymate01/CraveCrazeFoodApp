@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { featured } from "../constants";
 import { themeColors } from "../theme";
@@ -10,6 +10,7 @@ export default function CartScreen() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
+      {/* top button */}
       <View style={styles.topButtonContainer}>
         <TouchableOpacity style={styles.topButton} onPress={navigation.goBack}>
           <Icon.ArrowLeft strokeWidth={3} stroke="white" />
@@ -18,6 +19,21 @@ export default function CartScreen() {
           <Text style={styles.cartTitle}>Your Cart</Text>
           <Text style={styles.resturantTitle}>{restaurant.name}</Text>
         </View>
+      </View>
+
+      {/* delivery time */}
+      <View
+        style={styles.deliveryTimeContainer}
+        className="flex-row px-4 items-center"
+      >
+        <Image
+          source={require("../assets/images/bikeGuy.png")}
+          style={styles.deliveryImage}
+        />
+        <Text style={styles.deliveryText}>Deliver in 20-30 minutes</Text>
+        <TouchableOpacity>
+          <Text style={styles.changeText}>Change</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -51,5 +67,25 @@ const styles = {
   resturantTitle: {
     textAlign: "center",
     color: "#888",
+  },
+  deliveryTimeContainer: {
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: themeColors.bgColor(0.2),
+    alignItems: "center",
+  },
+  deliveryImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 999,
+  },
+  deliveryText: {
+    flex: 1,
+    paddingLeft: 20,
+  },
+  changeText: {
+    color: themeColors.text,
+    fontWeight: "bold",
   },
 };
