@@ -13,7 +13,11 @@ export default function CartScreen() {
       {/* top button */}
       <View style={styles.topButtonContainer}>
         <TouchableOpacity style={styles.topButton} onPress={navigation.goBack}>
-          <Icon.ArrowLeft strokeWidth={3} stroke="white" />
+          <Icon.ArrowLeft
+            strokeWidth={3}
+            stroke="white"
+            onPress={() => navigation.goBack()}
+          />
         </TouchableOpacity>
         <View>
           <Text style={styles.cartTitle}>Your Cart</Text>
@@ -200,7 +204,7 @@ const styles = {
   totalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   totalLabel: {
     color: "#555",
@@ -218,7 +222,7 @@ const styles = {
   },
   placeOrderButton: {
     backgroundColor: themeColors.bgColor(1),
-    padding: 12,
+    padding: 18,
     borderRadius: 999,
   },
   placeOrderButtonText: {
