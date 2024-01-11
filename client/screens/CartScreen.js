@@ -14,6 +14,10 @@ export default function CartScreen() {
         <TouchableOpacity style={styles.topButton} onPress={navigation.goBack}>
           <Icon.ArrowLeft strokeWidth={3} stroke="white" />
         </TouchableOpacity>
+        <View>
+          <Text style={styles.cartTitle}>Your Cart</Text>
+          <Text style={styles.resturantTitle}>{restaurant.name}</Text>
+        </View>
       </View>
     </View>
   );
@@ -38,5 +42,14 @@ const styles = {
     position: "absolute",
     top: 5,
     left: 10,
+  },
+  cartTitle: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  resturantTitle: {
+    textAlign: "center",
+    color: "#888",
   },
 };
