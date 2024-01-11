@@ -65,6 +65,30 @@ export default function CartScreen() {
           );
         })}
       </ScrollView>
+
+      {/* totals */}
+      <View style={styles.totalsContainer}>
+        <View style={styles.totalRow}>
+          <Text style={styles.totalLabel}>Subtotal</Text>
+          <Text style={styles.totalValue}>${10}</Text>
+        </View>
+        <View style={styles.totalRow}>
+          <Text style={styles.totalLabel}>Delivery Fee</Text>
+          <Text style={styles.totalValue}>${10}</Text>
+        </View>
+        <View style={styles.totalRow}>
+          <Text style={styles.orderTotalLabel}>Order Total</Text>
+          <Text style={styles.orderTotalValue}>${10 + 20}</Text>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.placeOrderButton}
+            // onPress={() => navigation.navigate("PreparingOrder")}
+          >
+            <Text style={styles.placeOrderButtonText}>Place Order</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
@@ -165,5 +189,42 @@ const styles = {
     padding: 6,
     borderRadius: 999,
     backgroundColor: themeColors.bgColor(1),
+  },
+  totalsContainer: {
+    backgroundColor: themeColors.bgColor(0.2),
+    padding: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    marginBottom: 0,
+  },
+  totalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  totalLabel: {
+    color: "#555",
+  },
+  totalValue: {
+    fontWeight: "bold",
+  },
+  orderTotalLabel: {
+    fontWeight: "bold",
+  },
+  orderTotalValue: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: themeColors.text,
+  },
+  placeOrderButton: {
+    backgroundColor: themeColors.bgColor(1),
+    padding: 12,
+    borderRadius: 999,
+  },
+  placeOrderButtonText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 };
