@@ -87,7 +87,7 @@ export default function CartScreen() {
         <View>
           <TouchableOpacity
             style={styles.placeOrderButton}
-            // onPress={() => navigation.navigate("PreparingOrder")}
+            onPress={() => navigation.navigate("PreparingOrder")}
           >
             <Text style={styles.placeOrderButtonText}>Place Order</Text>
           </TouchableOpacity>

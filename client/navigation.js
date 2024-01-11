@@ -6,6 +6,7 @@ import React from "react";
 import HomeScreen from "./screens/HomeScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import CartScreen from "./screens/CartScreen";
+import PreparingOrder from "./screens/PreparingOrder";
 
 export default function Navigation() {
   return (
@@ -20,6 +21,11 @@ export default function Navigation() {
           name="Cart"
           options={{ presentation: "modal" }}
           component={CartScreen}
+        />
+        <Stack.Screen
+          name="PreparingOrder"
+          options={{ presentation: "fullScreenModal" }}
+          component={PreparingOrder}
         />
       </Stack.Navigator>
     </NavigationContainer>
