@@ -40,6 +40,18 @@ export default function DeliveryScreen() {
           pinColor={themeColors.bgColor(1)}
         />
       </MapView>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.goBack();
+          navigation.goBack();
+        }}
+        style={styles.backButton}
+      >
+        <Icon.ArrowLeft
+          strokeWidth={3}
+          stroke={themeColors.bgColor(1)}
+        ></Icon.ArrowLeft>
+      </TouchableOpacity>
       <View style={styles.container}>
         <TouchableOpacity style={styles.absoluteButton}></TouchableOpacity>
         <View style={styles.innerContainer}>
@@ -135,9 +147,9 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    padding: 5,
     borderRadius: 50,
-    marginVertical: 5,
+    marginVertical: 20,
     marginHorizontal: 10,
   },
   deliveryInfoContainer: {
@@ -182,5 +194,17 @@ const styles = {
     padding: 8,
     borderRadius: 999,
     marginHorizontal: 5,
+  },
+  backButton: {
+    position: "absolute",
+    top: 49,
+    left: 20,
+    backgroundColor: "white",
+    padding: 2,
+    borderRadius: 999,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
   },
 };

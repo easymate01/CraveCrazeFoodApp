@@ -26,7 +26,10 @@ export default function RestaurantScreen() {
     <View>
       <CartIcon />
       <StatusBar style="light" />
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 10 }}
+        contentInset={{ bottom: 40 }}
+      >
         <View style={styles.container}>
           <Image style={styles.image} source={item.image} />
           <TouchableOpacity
