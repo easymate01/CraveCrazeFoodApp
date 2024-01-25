@@ -11,12 +11,11 @@ import {
 
 export default function DishRow({ item }) {
   const dispatch = useDispatch();
-
-  const totalItems = useSelector((state) =>
+  const basketItems = useSelector((state) =>
     selectCartItemsById(state, item.id)
   );
-
   const handleIncrement = () => {
+    console.log("adding item to cart:", item.name);
     dispatch(addToCart({ ...item }));
   };
 
@@ -43,7 +42,7 @@ export default function DishRow({ item }) {
                 stroke={"white"}
               ></Icon.Minus>
             </TouchableOpacity>
-            <Text style={styles.quantity}>{totalItems.length}</Text>
+            <Text style={styles.quantity}>{basketItems.length}</Text>
             <TouchableOpacity style={styles.iconButton}>
               <Icon.Plus
                 onPress={handleIncrement}
