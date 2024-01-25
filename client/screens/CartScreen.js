@@ -1,16 +1,37 @@
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { featured } from "../constants";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
+import {
+  removeFromCart,
+  selectCartItems,
+  selectCartTotal,
+} from "../slices/cartSlice";
 
 export default function CartScreen() {
+  const [groupedItems, setGroupedItems] = useState({});
+  const deliveryFee = 10;
   const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const items = cartItems.reduce((group, item) => {
+      if (group[item.id]) {
+        group[item.id].push(item);
+      } else {
+        group[item.id] = [item];
+      }
+      return group;
+    }, {});
+    setGroupedItems(items);
+  }, [cartItems]);
   return (
     <View style={styles.container}>
       {/* top button */}
@@ -50,16 +71,17 @@ export default function CartScreen() {
           paddingBottom: 50,
         }}
       >
-        {restaurant.dishes.map((dish, index) => {
+        {Object.entries(groupedItems).map(([key, items]) => {
+          let dish = items[0];
           return (
-            <View key={index} style={styles.dishItem}>
-              <Text style={styles.quantityText}>2 x </Text>
+            <View key={key} style={styles.dishItem}>
+              <Text style={styles.quantityText}>{items.length} x </Text>
               <Image style={styles.dishImage} source={dish.image} />
               <Text style={styles.dishName}>{dish?.name}</Text>
               <Text style={styles.dishPrice}>${dish?.price}</Text>
               <TouchableOpacity
                 style={styles.removeButton}
-                // onPress={() => dispatch(removeFromBasket({ id: dish[0]?.id }))}
+                onPress={() => dispatch(removeFromCart({ id: dish.id }))}
               >
                 <Icon.Minus
                   strokeWidth={2}
@@ -77,15 +99,15 @@ export default function CartScreen() {
       <View style={styles.totalsContainer}>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Subtotal</Text>
-          <Text style={styles.totalValue}>${10}</Text>
+          <Text style={styles.totalValue}>${cartTotal}</Text>
         </View>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Delivery Fee</Text>
-          <Text style={styles.totalValue}>${10}</Text>
+          <Text style={styles.totalValue}>${deliveryFee}</Text>
         </View>
         <View style={styles.totalRow}>
           <Text style={styles.orderTotalLabel}>Order Total</Text>
-          <Text style={styles.orderTotalValue}>${10 + 20}</Text>
+          <Text style={styles.orderTotalValue}>${deliveryFee + cartTotal}</Text>
         </View>
         <View>
           <TouchableOpacity

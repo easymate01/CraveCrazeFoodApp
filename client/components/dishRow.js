@@ -15,7 +15,6 @@ export default function DishRow({ item }) {
     selectCartItemsById(state, item.id)
   );
   const handleIncrement = () => {
-    console.log("adding item to cart:", item.name);
     dispatch(addToCart({ ...item }));
   };
 
