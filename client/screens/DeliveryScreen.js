@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { featured } from "../constants";
 import { useNavigation } from "@react-navigation/native";
@@ -30,18 +30,63 @@ export default function DeliveryScreen() {
           pinColor={themeColors.bgColor(1)}
         />
       </MapView>
-      {/* <View
-        style={{
-          backgroundColor: "white",
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          marginTop: -12,
-          flex: 1,
-        }}
-      >
-        <TouchableOpacity style={{ position: "absolute", right: 16, top: 16 }}>
-        </TouchableOpacity>
-      </View> */}
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.absoluteButton}></TouchableOpacity>
+        <View style={styles.innerContainer}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.title}>Estimated Arrival</Text>
+            <Text style={styles.time}>20-30 Minutes</Text>
+            <Text style={styles.statusText}>Your Order is own its way</Text>
+          </View>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/bikeGuy2.gif")}
+          />
+        </View>
+      </View>
     </View>
   );
 }
+
+const styles = {
+  container: {
+    borderRadius: 20,
+    marginTop: 0,
+    backgroundColor: "white",
+    position: "relative",
+  },
+  absoluteButton: {
+    position: "absolute",
+    right: 4,
+    top: 2,
+  },
+  innerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+  },
+  infoContainer: {
+    flexDirection: "column",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#4B5563",
+  },
+  time: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#4B5563",
+    marginTop: 5,
+  },
+  statusText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#4B5563",
+    marginTop: 10,
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+};
