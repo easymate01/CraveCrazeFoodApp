@@ -1,6 +1,6 @@
+import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import * as Icon from "react-native-feather";
-import React from "react";
 import { featured } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
@@ -9,6 +9,9 @@ import { themeColors } from "../theme";
 export default function DeliveryScreen() {
   const restaurant = featured.restaurants[0];
   const navigation = useNavigation();
+  const handleCancel = () => {
+    navigation.navigate("Home");
+  };
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -65,7 +68,10 @@ export default function DeliveryScreen() {
                     strokeWidth={1}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton}>
+                <TouchableOpacity
+                  onPress={handleCancel}
+                  style={styles.iconButton}
+                >
                   <Icon.X stroke={"red"} strokeWidth={5} />
                 </TouchableOpacity>
               </View>
