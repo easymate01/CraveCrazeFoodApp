@@ -4,11 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function PreparingOrder() {
   const navigation = useNavigation();
+
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate("Delivery");
     }, 2000);
   }, []);
+
   return (
     <View style={styles.loadingContainer}>
       <Image

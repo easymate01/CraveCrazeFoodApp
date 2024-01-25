@@ -8,9 +8,7 @@ import { useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
 
 export default function CartScreen() {
-  const restaurant = featured.restaurants[0];
-  const newRes = useSelector((state) => state.restaurant.restaurant);
-  console.log("newRes", newRes);
+  const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
 
   return (
