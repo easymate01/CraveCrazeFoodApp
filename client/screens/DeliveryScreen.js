@@ -9,6 +9,7 @@ import { themeColors } from "../theme";
 export default function DeliveryScreen() {
   const restaurant = featured.restaurants[0];
   const navigation = useNavigation();
+
   const handleCancel = () => {
     navigation.navigate("Home");
   };
