@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import * as Icon from "react-native-feather";
 import React from "react";
 import { featured } from "../constants";
 import { useNavigation } from "@react-navigation/native";
@@ -42,6 +43,34 @@ export default function DeliveryScreen() {
             style={styles.image}
             source={require("../assets/images/bikeGuy2.gif")}
           />
+        </View>
+      </View>
+      <View style={styles.bottomContainer}>
+        <View style={styles.deliveryInfoContainer}>
+          <View style={styles.deliveryGuyContainer}>
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.deliveryGuyImage}
+                source={require("../assets/images/deliveryGuy.png")}
+              />
+            </View>
+            <View style={styles.deliveryGuyTextContainer}>
+              <Text style={styles.name}>Syed Noman</Text>
+              <Text style={styles.role}>Your Rider</Text>
+            </View>
+          </View>
+          <View style={styles.actionButtonsContainer}>
+            <TouchableOpacity style={styles.iconButton}>
+              <Icon.Phone
+                fill={themeColors.bgColor(1)}
+                stroke={themeColors.bgColor(1)}
+                strokeWidth={1}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton}>
+              <Icon.X stroke={"red"} strokeWidth={5} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -88,5 +117,58 @@ const styles = {
   image: {
     width: 100,
     height: 100,
+  },
+  bottomContainer: {
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 20,
+    marginVertical: 5,
+    marginHorizontal: 2,
+  },
+  deliveryInfoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+  deliveryGuyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  imageContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    padding: 5,
+    borderRadius: 999,
+  },
+  deliveryGuyImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 999,
+  },
+  deliveryGuyTextContainer: {
+    marginLeft: 10,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
+  role: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+  },
+  actionButtonsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconButton: {
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 999,
+    marginHorizontal: 5,
   },
 };
