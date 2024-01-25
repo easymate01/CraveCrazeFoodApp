@@ -13,15 +13,16 @@ export const createSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       let newCart = [...state.items];
+      // Find, which item to remove
       let itemIndex = state.items.findIndex(
         (item) => item.id == action.payload.id
       );
       if (itemIndex >= 0) {
-        newBasket.splice(itemIndex, 1);
+        newCart.splice(itemIndex, 1);
       } else {
         console.log("can't remove item as it is not in the basket");
       }
-      state.items = newBasket;
+      state.items = newCart;
     },
     emptyCart: (state, action) => {
       state.items = [];
@@ -30,8 +31,14 @@ export const createSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setRestaurant } = createSlice.actions;
+export const { addToCart, removeFromCart, emptyCart } = createSlice.actions;
 
-export const selectRestaurant = (state) => state.restaurant.restaurant;
+export const selectCartItems = (state) => state.cart.items;
+
+export const selectCartItemsById = (state, id) =>
+  state.cart.items.filter((item) => item.id == id);
+
+export const selectCartTotal = (state) =>
+  state.cart.items.reduce((total, item) => (total = total += item.price), 0);
 
 export default createSlice.reducer;
