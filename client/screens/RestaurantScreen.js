@@ -1,17 +1,25 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 import DishRow from "../components/dishRow";
 import CartIcon from "../components/cartIcon";
 import { StatusBar } from "expo-status-bar";
+import { useDispatch } from "react-redux/dist/react-redux";
+import { setRestaurant } from "../slices/restaurantSlice";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
   const navigation = useNavigation();
   const item = params;
+  let dispatch = useDispatch();
 
+  useEffect(() => {
+    if (item && item.id) {
+      dispatch(setRestaurant({ ...item }));
+    }
+  }, []);
   return (
     <View>
       <CartIcon />
