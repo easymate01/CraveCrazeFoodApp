@@ -44,32 +44,32 @@ export default function DeliveryScreen() {
             source={require("../assets/images/bikeGuy2.gif")}
           />
         </View>
-      </View>
-      <View style={styles.bottomContainer}>
-        <View style={styles.deliveryInfoContainer}>
-          <View style={styles.deliveryGuyContainer}>
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.deliveryGuyImage}
-                source={require("../assets/images/deliveryGuy.png")}
-              />
+        <View style={styles.bottomContainer}>
+          <View style={styles.deliveryInfoContainer}>
+            <View style={styles.deliveryGuyContainer}>
+              <View style={styles.imageContainer}>
+                <Image
+                  style={styles.deliveryGuyImage}
+                  source={require("../assets/images/deliveryGuy.png")}
+                />
+              </View>
+              <View style={styles.deliveryGuyTextContainer}>
+                <Text style={styles.name}>Minta János</Text>
+                <Text style={styles.role}>Your Rider</Text>
+              </View>
+              <View style={styles.actionButtonsContainer}>
+                <TouchableOpacity style={styles.iconButton}>
+                  <Icon.Phone
+                    fill={themeColors.bgColor(1)}
+                    stroke={themeColors.bgColor(1)}
+                    strokeWidth={1}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton}>
+                  <Icon.X stroke={"red"} strokeWidth={5} />
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.deliveryGuyTextContainer}>
-              <Text style={styles.name}>Syed Noman</Text>
-              <Text style={styles.role}>Your Rider</Text>
-            </View>
-          </View>
-          <View style={styles.actionButtonsContainer}>
-            <TouchableOpacity style={styles.iconButton}>
-              <Icon.Phone
-                fill={themeColors.bgColor(1)}
-                stroke={themeColors.bgColor(1)}
-                strokeWidth={1}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton}>
-              <Icon.X stroke={"red"} strokeWidth={5} />
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -119,14 +119,14 @@ const styles = {
     height: 100,
   },
   bottomContainer: {
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    backgroundColor: themeColors.bgColor(0.8),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 50,
     marginVertical: 5,
-    marginHorizontal: 2,
+    marginHorizontal: 10,
   },
   deliveryInfoContainer: {
     flexDirection: "row",
