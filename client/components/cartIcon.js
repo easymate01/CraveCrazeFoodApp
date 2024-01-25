@@ -2,9 +2,14 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectCartItems } from "../slices/cartSlice";
 
 export default function CartIcon() {
   const navigation = useNavigation();
+  const cartItems = useSelector(selectCartItems);
+  if (!cartItems.length) return;
+
   return (
     <View style={styles.container}>
       <TouchableOpacity

@@ -5,9 +5,10 @@ import { featured } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { themeColors } from "../theme";
+import { useSelector } from "react-redux";
 
 export default function DeliveryScreen() {
-  const restaurant = featured.restaurants[0];
+  const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
 
   const handleCancel = () => {

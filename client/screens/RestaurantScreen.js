@@ -6,7 +6,8 @@ import * as Icon from "react-native-feather";
 import DishRow from "../components/dishRow";
 import CartIcon from "../components/cartIcon";
 import { StatusBar } from "expo-status-bar";
-import { useDispatch } from "react-redux/dist/react-redux";
+import { useDispatch } from "react-redux";
+
 import { setRestaurant } from "../slices/restaurantSlice";
 
 export default function RestaurantScreen() {
