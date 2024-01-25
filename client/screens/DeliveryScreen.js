@@ -8,7 +8,7 @@ import { themeColors } from "../theme";
 import { useSelector } from "react-redux";
 
 export default function DeliveryScreen() {
-  const restaurant = useSelector(selectRestaurant);
+  const restaurant = featured.restaurants[0];
   const navigation = useNavigation();
 
   const handleCancel = () => {

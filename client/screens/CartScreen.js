@@ -8,8 +8,11 @@ import { useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
 
 export default function CartScreen() {
-  const restaurant = useSelector(selectRestaurant);
+  const restaurant = featured.restaurants[0];
+  const newRes = useSelector((state) => state.restaurant);
+  console.log("newRes", newRes);
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       {/* top button */}

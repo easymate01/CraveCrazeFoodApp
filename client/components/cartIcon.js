@@ -7,8 +7,6 @@ import { selectCartItems } from "../slices/cartSlice";
 
 export default function CartIcon() {
   const navigation = useNavigation();
-  const cartItems = useSelector(selectCartItems);
-  if (!cartItems.length) return;
 
   return (
     <View style={styles.container}>
