@@ -5,14 +5,18 @@ import { featured } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { themeColors } from "../theme";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { emptyCart } from "../slices/cartSlice";
+import { selectRestaurant } from "../slices/restaurantSlice";
 
 export default function DeliveryScreen() {
   const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
     navigation.navigate("Home");
+    dispatch(emptyCart());
   };
   return (
     <View style={{ flex: 1 }}>
