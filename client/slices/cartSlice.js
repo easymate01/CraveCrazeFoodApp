@@ -24,7 +24,7 @@ export const createSlice = createSlice({
       state.items = newBasket;
     },
     emptyCart: (state, action) => {
-      state.restaurant = action.payload;
+      state.items = [];
     },
   },
 });
