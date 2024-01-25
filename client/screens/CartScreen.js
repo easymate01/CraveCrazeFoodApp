@@ -9,7 +9,7 @@ import { selectRestaurant } from "../slices/restaurantSlice";
 
 export default function CartScreen() {
   const restaurant = featured.restaurants[0];
-  const newRes = useSelector((state) => state.restaurant);
+  const newRes = useSelector((state) => state.restaurant.restaurant);
   console.log("newRes", newRes);
   const navigation = useNavigation();
 

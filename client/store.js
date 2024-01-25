@@ -4,7 +4,7 @@ import resturantSlice from "./slices/restaurantSlice";
 
 export const store = configureStore({
   reducer: {
-    basket: cartSlice,
-    resturant: resturantSlice,
+    cart: cartSlice,
+    restaurant: resturantSlice,
   },
 });
