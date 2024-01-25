@@ -11,7 +11,7 @@ import {
 
 export default function DishRow({ item }) {
   const dispatch = useDispatch();
-  const basketItems = useSelector((state) =>
+  const totalItems = useSelector((state) =>
     selectCartItemsById(state, item.id)
   );
   const handleIncrement = () => {
@@ -33,19 +33,25 @@ export default function DishRow({ item }) {
         <View style={styles.priceContainer}>
           <Text style={styles.price}>${item.price}</Text>
           <View style={styles.iconContainer}>
-            <TouchableOpacity style={styles.iconButton}>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={handleDecrement}
+            >
               <Icon.Minus
-                onPress={handleDecrement}
                 strokeWidth={2}
                 height={20}
                 width={20}
                 stroke={"white"}
               ></Icon.Minus>
             </TouchableOpacity>
-            <Text style={styles.quantity}>{basketItems.length}</Text>
-            <TouchableOpacity style={styles.iconButton}>
+            <Text style={styles.quantity}>{totalItems.length}</Text>
+
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={handleIncrement}
+              disabled={!totalItems.length}
+            >
               <Icon.Plus
-                onPress={handleIncrement}
                 strokeWidth={2}
                 height={20}
                 width={20}
