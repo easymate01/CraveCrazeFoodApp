@@ -2,17 +2,26 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  selectCartItemsById,
+} from "../slices/cartSlice";
 
 export default function DishRow({ item }) {
-  const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
+
+  const totalItems = useSelector((state) =>
+    selectCartItemsById(state, item.id)
+  );
 
   const handleIncrement = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
+    dispatch(addToCart({ ...item }));
   };
 
   const handleDecrement = () => {
-    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
+    dispatch(removeFromCart({ id: item.id }));
   };
   return (
     <View style={styles.container}>
@@ -34,7 +43,7 @@ export default function DishRow({ item }) {
                 stroke={"white"}
               ></Icon.Minus>
             </TouchableOpacity>
-            <Text style={styles.quantity}>{quantity}</Text>
+            <Text style={styles.quantity}>{totalItems.length}</Text>
             <TouchableOpacity style={styles.iconButton}>
               <Icon.Plus
                 onPress={handleIncrement}
