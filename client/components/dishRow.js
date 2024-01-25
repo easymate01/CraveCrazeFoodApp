@@ -35,6 +35,7 @@ export default function DishRow({ item }) {
           <View style={styles.iconContainer}>
             <TouchableOpacity
               style={styles.iconButton}
+              disabled={!totalItems.length}
               onPress={handleDecrement}
             >
               <Icon.Minus
@@ -49,7 +50,6 @@ export default function DishRow({ item }) {
             <TouchableOpacity
               style={styles.iconButton}
               onPress={handleIncrement}
-              disabled={!totalItems.length}
             >
               <Icon.Plus
                 strokeWidth={2}
