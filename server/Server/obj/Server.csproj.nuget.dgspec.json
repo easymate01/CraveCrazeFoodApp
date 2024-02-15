@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj": {}
+    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj": {
+    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj",
+        "projectPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj",
         "packagesPath": "C:\\Users\\gulya\\.nuget\\packages\\",
-        "outputPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\obj\\",
+        "outputPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gulya\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,9 +40,27 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.15.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.16, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.17.2, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

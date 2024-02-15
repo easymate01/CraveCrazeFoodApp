@@ -12,5 +12,6 @@
         public int Stars { get; set; }
         public string Reviews { get; set; }
         public string Category { get; set; }
+
     }
 }
