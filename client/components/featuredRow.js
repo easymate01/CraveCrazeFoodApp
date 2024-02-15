@@ -32,22 +32,7 @@ function FeaturedRow({ title, description, restaurants }) {
         style={styles.scrollView}
       >
         {restaurants.map((resturant, index) => {
-          return (
-            <RestaurantCard
-              key={index}
-              item={resturant}
-              //   id={resturant.id}
-              //   imgUrl={resturant.image}
-              //   title={resturant.name}
-              //   rating={resturant.rating}
-              //   type={resturant.type?.name}
-              //   address="123 main street"
-              //   description={resturant.description}
-              //   dishes={resturant.dishes}
-              //   lng={resturant.lng}
-              //   lat={resturant.lat}
-            />
-          );
+          return <RestaurantCard key={index} item={resturant} />;
         })}
       </ScrollView>
     </View>
