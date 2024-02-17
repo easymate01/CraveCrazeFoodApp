@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.DTOs;
+using Server.Models;
 using Server.Services;
 
 namespace Server.Controllers
@@ -14,6 +16,19 @@ namespace Server.Controllers
         {
             _restaurantService = restaurantService;
             _logger = logger;
+        }
+
+        [HttpPost("/create/restaurant")]
+        public async Task<ActionResult<Restaurant>> CreateProduct(RestaurantDto restaurant)
+        {
+            if (restaurant.Name == null)
+            {
+                return BadRequest("Invalid username. A valid username is required.");
+            }
+
+            var newRestaurant = await _restaurantService.CreateAsync(restaurant);
+            return Ok(newRestaurant);
+
         }
     }
 }
