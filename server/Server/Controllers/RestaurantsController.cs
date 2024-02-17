@@ -19,7 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("/create/restaurant")]
-        public async Task<ActionResult<Restaurant>> CreateProduct(RestaurantDto restaurant)
+        public async Task<ActionResult<Restaurant>> CreateRestaurant(RestaurantDto restaurant)
         {
             if (restaurant.Name == null)
             {
