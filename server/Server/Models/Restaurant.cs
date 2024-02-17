@@ -13,5 +13,6 @@
         public string Reviews { get; set; }
         public string Category { get; set; }
 
+        public List<Dish> Dishes { get; set; }
     }
 }
