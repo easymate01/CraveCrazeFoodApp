@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mgXIJIJaRe/GQuyC+akk8LKPqPjjrq2MyAvDBPNwNAnsOUVo/FJiIk3tO0UvMKxovdJ0nzFz4rFJC4HGlEoQnQ==",
+  "dgSpecHash": "rwKS1PL71p95EAjtr/8GgUjcnr3+nezKxl+2flj96/SlpaPqsGsciFhJWKdwBFbaQxAJ/SqQRU+curXmjMxIDQ==",
   "success": true,
-  "projectFilePath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj",
+  "projectFilePath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gulya\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\gulya\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

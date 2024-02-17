@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj": {}
+    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj": {
+    "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj",
+        "projectUniqueName": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\Server.csproj",
+        "projectPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\Server.csproj",
         "packagesPath": "C:\\Users\\gulya\\.nuget\\packages\\",
-        "outputPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\server\\Server\\obj\\",
+        "outputPath": "E:\\CodeCool\\JobHunt\\FINAL\\CraveCrazeFoodApp\\Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gulya\\AppData\\Roaming\\NuGet\\NuGet.Config",
