@@ -15,12 +15,16 @@ namespace Server.Services
 
         public async Task<List<Restaurant>> GetAllAsync()
         {
-            return await _dbContext.Restaurants.ToListAsync();
+            return await _dbContext.Restaurants
+                .Include(r => r.Dishes) // Include the dishes
+                .ToListAsync();
         }
 
         public async Task<Restaurant> GetByIdAsync(int id)
         {
-            return await _dbContext.Restaurants.FindAsync(id);
+            return await _dbContext.Restaurants
+                .Include(r => r.Dishes) // Include the dishes
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<Restaurant> CreateAsync(RestaurantDto restaurantDto)
