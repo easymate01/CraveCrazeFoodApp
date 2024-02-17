@@ -31,5 +31,7 @@ app.Run();
 void ConfigureServices()
 {
     builder.Services.AddTransient<IRestaurant, RestaurantService>();
+    builder.Services.AddTransient<IDish, DishService>();
+
     builder.Services.AddDbContext<DataContext>();
 }

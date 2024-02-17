@@ -1,4 +1,5 @@
-﻿namespace Server.Models
+﻿using System.Text.Json.Serialization;
+namespace Server.Models
 {
     public class Dish
     {
@@ -9,6 +10,7 @@
         public string Image { get; set; }
 
         public int RestaurantId { get; set; }
+        [JsonIgnore]
         public Restaurant Restaurant { get; set; }
     }
 }
