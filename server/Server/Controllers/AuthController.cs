@@ -16,22 +16,20 @@ namespace webapi.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
+        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _authService.RegisterAsync(request.Email, request.Username, request.Password, "User");
+            var result = await _authService.RegisterAsync(request.Email, request.Username, request.Password);
 
             if (!result.Success)
             {
                 AddErrors(result);
                 return BadRequest(ModelState);
             }
-
-
 
             return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
         }
@@ -59,7 +57,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(new AuthResponse(result.IdentityUserId, result.Email, result.UserName, result.Token));
+            return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
         }
 
 

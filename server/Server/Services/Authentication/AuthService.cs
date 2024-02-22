@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using webapi.Data;
-using webapi.Models;
 
 namespace webapi.Services.Authentication
 {
@@ -16,27 +14,22 @@ namespace webapi.Services.Authentication
             _tokenService = tokenService;
             _dataContext = dataContext;
         }
-        public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
+        public async Task<AuthResult> RegisterAsync(string email, string username, string password)
         {
-            var identityuser = new IdentityUser { UserName = username, Email = email };
-
-            var result = await _userManager.CreateAsync(identityuser, password);
+            var result = await _userManager.CreateAsync(
+                new IdentityUser { UserName = username, Email = email }, password);
 
             if (!result.Succeeded)
             {
                 return FailedRegistration(result, email, username);
             }
-            await _userManager.AddToRoleAsync(identityuser, role);
 
-            _dataContext.Users.Add(new User { UserName = username, Email = email, IdentityUserId = identityuser.Id });
-
-            await _dataContext.SaveChangesAsync();
-            return new AuthResult(true, identityuser.Id, email, username, "");
+            return new AuthResult(true, email, username, "");
         }
 
         private static AuthResult FailedRegistration(IdentityResult result, string email, string username)
         {
-            var authResult = new AuthResult(false, null, email, username, "");
+            var authResult = new AuthResult(false, email, username, "");
 
             foreach (var error in result.Errors)
             {
@@ -64,55 +57,27 @@ namespace webapi.Services.Authentication
             Console.WriteLine(role);
             var adminAccessToken = _tokenService.CreateToken(managedUser, role);
 
-
-            return new AuthResult(true, managedUser.Id, managedUser.Email, managedUser.UserName, adminAccessToken);
+            return new AuthResult(true, managedUser.Email, managedUser.UserName, adminAccessToken);
 
         }
 
         private static AuthResult InvalidEmail(string email)
         {
-            var result = new AuthResult(false, null, email, "", "");
+            var result = new AuthResult(false, email, "", "");
             result.ErrorMessages.Add("Bad credentials", "Invalid email");
             return result;
         }
 
         private static AuthResult InvalidPassword(string email, string userName)
         {
-            var result = new AuthResult(false, null, email, userName, "");
+            var result = new AuthResult(false, email, userName, "");
             result.ErrorMessages.Add("Bad credentials", "Invalid password");
             return result;
         }
 
-        public async Task<AuthResult> GoogleLoginAsync(string email)
+        public Task<AuthResult> GoogleLoginAsync(string email)
         {
-            // Check if a user with the provided email exists in the database
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user == null)
-            {
-                // If the user doesn't exist, create a new IdentityUser with the given email
-                user = new IdentityUser
-                {
-                    UserName = email,
-                    Email = email,
-                };
-
-                var result = await _userManager.CreateAsync(user);
-
-                if (!result.Succeeded)
-                {
-                    return FailedRegistration(result, email, email);
-                }
-            }
-
-            // Add user to a role if needed (replace "User" with your desired role)
-            await _userManager.AddToRoleAsync(user, "User");
-
-            // Generate a JWT token using the TokenService
-            var role = "User"; // You can customize this based on your needs
-            var token = _tokenService.CreateToken(user, role);
-
-            return new AuthResult(true, user.Id, email, user.UserName, token);
+            throw new NotImplementedException();
         }
     }
 }
