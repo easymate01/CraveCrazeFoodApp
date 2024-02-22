@@ -4,10 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using Server.Data;
 using Server.Services;
 using System.Text;
+using webapi.Services.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 AddAuthentication();
+AddIdentity();
 
 // Add services to the container.
 
@@ -53,6 +55,9 @@ void ConfigureServices()
 
     builder.Services.AddDbContext<DataContext>();
     builder.Services.AddDbContext<UsersContext>();
+
+    builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<ITokenService, TokenService>();
 }
 
 void AddAuthentication()
