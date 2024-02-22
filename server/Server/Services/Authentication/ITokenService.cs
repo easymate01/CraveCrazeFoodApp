@@ -4,6 +4,6 @@ namespace webapi.Services.Authentication
 {
     public interface ITokenService
     {
-         string CreateToken(IdentityUser user, string role);
+        string CreateToken(IdentityUser user, string role);
     }
 }

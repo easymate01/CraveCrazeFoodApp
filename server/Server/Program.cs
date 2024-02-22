@@ -20,8 +20,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationInsightsTelemetry();
 ConfigureServices();
+ConfigureSwagger();
 
 var app = builder.Build();
+AddRoles();
 
 
 // Configure CORS
@@ -63,11 +65,11 @@ void ConfigureServices()
 
 void AddAuthentication()
 {
-
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
+            options.IncludeErrorDetails = true;
             options.TokenValidationParameters = new TokenValidationParameters()
             {
                 ClockSkew = TimeSpan.Zero,
@@ -77,8 +79,10 @@ void AddAuthentication()
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = "apiWithAuthBackend",
                 ValidAudience = "apiWithAuthBackend",
+
+                // Use the helper method to ensure a 32-byte key
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes("!SomethingSecret!")
+                    PadKey(Encoding.UTF8.GetBytes("!SomethingSecret!"), 32)
                 ),
             };
         });
@@ -98,10 +102,10 @@ void AddIdentity()
             options.Password.RequireLowercase = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<DataContext>();
+        .AddEntityFrameworkStores<UsersContext>();
 }
 
-void configureSwagger()
+void ConfigureSwagger()
 {
     builder.Services.AddSwaggerGen(option =>
     {
@@ -130,4 +134,77 @@ void configureSwagger()
             }
         });
     });
+}
+
+void AddRoles()
+{
+    using var scope = app.Services.CreateScope();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var tAdmin = CreateAdminRole(roleManager);
+    tAdmin.Wait();
+
+    var tUser = CreateUserRole(roleManager);
+    tUser.Wait();
+}
+
+async Task CreateAdminRole(RoleManager<IdentityRole> roleManager)
+{
+    await roleManager.CreateAsync(new IdentityRole("Admin"));
+}
+
+async Task CreateUserRole(RoleManager<IdentityRole> roleManager)
+{
+    await roleManager.CreateAsync(new IdentityRole("User"));
+}
+
+void AddAdmin()
+{
+    var tAdmin = CreateAdminIfNotExists();
+    tAdmin.Wait();
+}
+
+async Task CreateAdminIfNotExists()
+{
+    using var scope = app.Services.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var adminDB = await userManager.FindByEmailAsync("admin@admin.com");
+
+    if (adminDB == null)
+    {
+        var admin = new IdentityUser { UserName = "admin", Email = "admin@admin.com" };
+        var adminCreated = await userManager.CreateAsync(admin, "admin123");
+
+        if (adminCreated.Succeeded)
+        {
+            var roleAssignment = await userManager.AddToRoleAsync(admin, "Admin");
+            if (roleAssignment.Succeeded)
+            {
+                // Log success
+                Console.WriteLine("Admin user and role assignment succeeded.");
+            }
+            else
+            {
+                // Log role assignment failure
+                Console.WriteLine("Failed to assign the Admin role to the user.");
+            }
+        }
+        else
+        {
+            // Log user creation failure
+            Console.WriteLine("Failed to create the admin user.");
+        }
+    }
+}
+
+byte[] PadKey(byte[] key, int length)
+{
+    if (key.Length >= length)
+    {
+        return key;
+    }
+
+    byte[] paddedKey = new byte[length];
+    Array.Copy(key, paddedKey, key.Length);
+    return paddedKey;
 }

@@ -59,10 +59,14 @@ namespace webapi.Services.Authentication
         }
         private SigningCredentials CreateSigningCredentials()
         {
+            string secretKey = "!SomethingSecret!";
+            byte[] keyBytes = Encoding.UTF8.GetBytes(secretKey);
+
+            // Trim or pad the key to make it exactly 32 bytes
+            Array.Resize(ref keyBytes, 32);
+
             return new SigningCredentials(
-                new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes("!SomethingSecret!")
-                ),
+                new SymmetricSecurityKey(keyBytes),
                 SecurityAlgorithms.HmacSha256
             );
         }
