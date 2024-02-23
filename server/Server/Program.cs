@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Server.Data;
 using Server.Services;
+using Server.Services.AwsS3;
 using System.Text;
 using webapi.Services.Authentication;
 
@@ -61,6 +62,7 @@ void ConfigureServices()
 
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
+    builder.Services.AddScoped<IStorageService, StorageService>();
 }
 
 void AddAuthentication()
