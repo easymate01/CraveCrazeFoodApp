@@ -44,7 +44,10 @@ namespace Server.Controllers
             };
 
             var result = await _storageService.UploadFileAsync(s3Obj, cred);
-
+            if (result.StatusCode != 200)
+            {
+                return NotFound(result);
+            }
             return Ok(result);
         }
     }
