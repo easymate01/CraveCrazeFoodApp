@@ -24,7 +24,6 @@ namespace Server.Controllers
             await file.CopyToAsync(memoryStr);
 
 
-            Console.WriteLine($"{file} been uploaded!!!");
             if (file == null || file.Length == 0)
             {
                 return BadRequest("Image is required.");
