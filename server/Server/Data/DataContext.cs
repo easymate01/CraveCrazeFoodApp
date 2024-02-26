@@ -14,28 +14,7 @@ public class DataContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<Restaurant>().HasData(
-            new Restaurant
-            {
-                Id = 1,
-                Name = "Papa Johns",
-                Image = "../assets/images/pizza.png",
-                Description = "Hot and spicy pizzas",
-                Lng = -85.5324269,
-                Lat = 38.2145602,
-                Address = "434 second street",
-                Stars = 4,
-                Reviews = "4.4k",
-                Category = "Fast Food"
-            }
-        );
 
-        // Seed the Dish data associated with the Restaurant
-        modelBuilder.Entity<Dish>().HasData(
-            new Dish { Id = 1, RestaurantId = 1, Name = "Pizza", Description = "Cheezy garlic pizza", Price = 10, Image = "../assets/images/pizzaDish.png" },
-            new Dish { Id = 2, RestaurantId = 1, Name = "Pizza", Description = "Cheezy garlic pizza", Price = 10, Image = "../assets/images/pizzaDish.png" },
-            new Dish { Id = 3, RestaurantId = 1, Name = "Pizza", Description = "Cheezy garlic pizza", Price = 10, Image = "../assets/images/pizzaDish.png" }
-        );
     }
 
 
