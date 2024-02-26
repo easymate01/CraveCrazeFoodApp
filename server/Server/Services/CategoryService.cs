@@ -10,9 +10,9 @@ namespace Server.Services
     {
         private readonly DataContext _dbContext;
 
-        private readonly StorageService _storageService; // Inject the StorageService
+        private readonly IStorageService _storageService; // Inject the StorageService
 
-        public CategoryService(DataContext dbContext, StorageService storageService)
+        public CategoryService(DataContext dbContext, IStorageService storageService)
         {
             _dbContext = dbContext;
             _storageService = storageService;

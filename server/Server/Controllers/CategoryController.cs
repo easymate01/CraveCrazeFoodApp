@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Server.DTOs;
 using Server.Models;
 using Server.Models.S3;
 using Server.Services;
@@ -18,9 +17,15 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody] CategoryDto categoryDto, IFormFile image)
+        public async Task<IActionResult> CreateCategory(IFormFile file, string name)
         {
-            if (image == null || image.Length == 0)
+            await using var memoryStr = new MemoryStream();
+
+            await file.CopyToAsync(memoryStr);
+
+
+            Console.WriteLine($"{file} been uploaded!!!");
+            if (file == null || file.Length == 0)
             {
                 return BadRequest("Image is required.");
             }
@@ -28,11 +33,11 @@ namespace Server.Controllers
             var s3Obj = new S3Object
             {
                 BucketName = "cravecraze",
-                ImageFile = image,
+                ImageFile = file,
             };
             var category = new Category
             {
-                Name = categoryDto.Name,
+                Name = name,
             };
 
 
