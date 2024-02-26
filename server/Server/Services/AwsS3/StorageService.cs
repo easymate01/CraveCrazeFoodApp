@@ -1,16 +1,13 @@
 ﻿using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Transfer;
-using Server.DTOs;
 using Server.Models.S3;
-using S3Object = Server.Models.S3.S3Object;
 
 namespace Server.Services.AwsS3
 {
     public class StorageService : IStorageService
     {
-
-        public async Task<S3ResponseDto> UploadFileAsync(S3Object s3obj, AwsCredentials awsCredentials)
+        public async Task<string> UploadImageAsync(IFormFile image, AwsCredentials awsCredentials, string bucketName)
         {
             var credentials = new BasicAWSCredentials(awsCredentials.AwsKey, awsCredentials.AwsSecret);
 
@@ -19,39 +16,33 @@ namespace Server.Services.AwsS3
                 RegionEndpoint = Amazon.RegionEndpoint.EUNorth1
             };
 
-            var response = new S3ResponseDto();
-
             try
             {
                 var uploadRequest = new TransferUtilityUploadRequest()
                 {
-                    InputStream = s3obj.InputStream,
-                    Key = s3obj.Name,
-                    BucketName = s3obj.BucketName,
+                    InputStream = image.OpenReadStream(),
+                    Key = $"CategoriesPictures/{Guid.NewGuid()}{Path.GetExtension(image.FileName)}",
+                    BucketName = bucketName,
                     CannedACL = S3CannedACL.NoACL
                 };
 
                 using var client = new AmazonS3Client(credentials, config);
-
                 var transferUtility = new TransferUtility(client);
-
                 await transferUtility.UploadAsync(uploadRequest);
 
-                response.StatusCode = 200;
-                response.Message = $"{s3obj.Name} has been uploaded successfully";
+                // Construct and return the URL of the uploaded image
+                return $"https://{bucketName}.s3.amazonaws.com/{uploadRequest.Key}";
             }
             catch (AmazonS3Exception ex)
             {
-                response.StatusCode = (int)ex.StatusCode;
-                response.Message = $"{ex.Message}";
+                // Handle Amazon S3 specific exceptions
+                throw new Exception($"Amazon S3 error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                response.StatusCode = 500;
-                response.Message = $"{ex.Message}";
+                // Handle other exceptions
+                throw new Exception($"Error uploading image: {ex.Message}");
             }
-
-            return response;
         }
     }
 }
