@@ -1,3 +1,4 @@
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +8,8 @@ using Server.Services;
 using Server.Services.AwsS3;
 using System.Text;
 using webapi.Services.Authentication;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 

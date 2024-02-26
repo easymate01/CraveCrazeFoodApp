@@ -38,8 +38,8 @@ namespace Server.Controllers
 
             var cred = new AwsCredentials()
             {
-                AwsKey = _configuration["AWSConfiguration:AWSAccessKey"],
-                AwsSecret = _configuration["AWSConfiguration:AWSSecretKey"],
+                AwsKey = Environment.GetEnvironmentVariable("AWSAccessKey"),
+                AwsSecret = Environment.GetEnvironmentVariable("AWSSecretKey"),
 
             };
 
