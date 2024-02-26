@@ -1,4 +1,5 @@
-﻿using Server.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.Models;
 using Server.Models.S3;
 using Server.Services.AwsS3;
 using S3Object = Server.Models.S3.S3Object;
@@ -25,10 +26,8 @@ namespace Server.Services
                 AwsSecret = Environment.GetEnvironmentVariable("AWSSecretKey"),
 
             };
-            // Upload image to S3 and get the image URL
             var imageUrl = await _storageService.UploadImageAsync(obj.ImageFile, cred, obj.BucketName);
 
-            // Create the category object with the image URL
             var newCategory = new Category
             {
                 Name = category.Name,
@@ -36,7 +35,7 @@ namespace Server.Services
             };
 
             // Save category to database
-            //_dbContext.Categories.Add(newCategory);
+            _dbContext.Categories.Add(newCategory);
             await _dbContext.SaveChangesAsync();
 
             return newCategory;

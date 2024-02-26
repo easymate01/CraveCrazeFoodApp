@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.DTOs;
+using Server.Models;
 using Server.Models.S3;
-using Server.Services.AwsS3;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -8,47 +10,43 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class CategoryController : Controller
     {
-        private readonly IStorageService _storageService;
-        private readonly ILogger<CategoryController> _logger;
-        private readonly IConfiguration _configuration;
+        private readonly ICategoryService _categoryService;
 
-        public CategoryController(IStorageService storageServiceservice, ILogger<CategoryController> logger, IConfiguration configuration)
+        public CategoryController(ICategoryService categoryService)
         {
-            _storageService = storageServiceservice;
-            _logger = logger;
-            _configuration = configuration;
+            _categoryService = categoryService;
         }
 
-        [HttpPost(Name = "UploadFile")]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryDto categoryDto, IFormFile image)
         {
-            await using var memoryStr = new MemoryStream();
+            if (image == null || image.Length == 0)
+            {
+                return BadRequest("Image is required.");
+            }
 
-            await file.CopyToAsync(memoryStr);
-
-            var fileExt = Path.GetExtension(file.Name);
-            var objName = $"{Guid.NewGuid()}.{fileExt}";
-
-            var s3Obj = new S3Object()
+            var s3Obj = new S3Object
             {
                 BucketName = "cravecraze",
-                InputStream = memoryStr,
-                Name = objName
+                ImageFile = image,
+            };
+            var category = new Category
+            {
+                Name = categoryDto.Name,
             };
 
-            var cred = new AwsCredentials()
-            {
-                AwsKey = Environment.GetEnvironmentVariable("AWSAccessKey"),
-                AwsSecret = Environment.GetEnvironmentVariable("AWSSecretKey"),
 
-            };
-
-            var result = await _storageService.UploadFileAsync(s3Obj, cred);
-            if (result.StatusCode != 200)
+            try
             {
-                return NotFound(result);
+                var createdCategory = await _categoryService.CreateCategoryAsync(category, s3Obj);
+                return CreatedAtAction(nameof(GetCategory), new { id = createdCategory.Id }, createdCategory);
             }
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while creating the category: {ex.Message}");
+            }
         }
+
+
     }
 }

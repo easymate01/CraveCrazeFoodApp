@@ -30,17 +30,14 @@ namespace Server.Services.AwsS3
                 var transferUtility = new TransferUtility(client);
                 await transferUtility.UploadAsync(uploadRequest);
 
-                // Construct and return the URL of the uploaded image
                 return $"https://{bucketName}.s3.amazonaws.com/{uploadRequest.Key}";
             }
             catch (AmazonS3Exception ex)
             {
-                // Handle Amazon S3 specific exceptions
                 throw new Exception($"Amazon S3 error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // Handle other exceptions
                 throw new Exception($"Error uploading image: {ex.Message}");
             }
         }
