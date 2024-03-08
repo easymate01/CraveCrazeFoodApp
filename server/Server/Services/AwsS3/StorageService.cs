@@ -30,7 +30,7 @@ namespace Server.Services.AwsS3
                 var transferUtility = new TransferUtility(client);
                 await transferUtility.UploadAsync(uploadRequest);
 
-                return uploadRequest.Key;
+                return $"https://{bucketName}.s3.amazonaws.com/{uploadRequest.Key}";
             }
             catch (AmazonS3Exception ex)
             {
