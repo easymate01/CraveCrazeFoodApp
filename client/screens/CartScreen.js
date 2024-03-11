@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { featured } from "../constants";
 import { themeColors } from "../theme";
@@ -11,6 +18,7 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../slices/cartSlice";
+import placeOrder from "../services/orderService";
 
 export default function CartScreen() {
   const [groupedItems, setGroupedItems] = useState({});
@@ -32,6 +40,25 @@ export default function CartScreen() {
     }, {});
     setGroupedItems(items);
   }, [cartItems]);
+
+  const handlePlaceOrder = async () => {
+    try {
+      const success = await placeOrder(cartItems);
+      if (success) {
+        Alert.alert("Success", "Your order has been placed successfully!");
+
+        dispatch(emptyCart());
+
+        navigation.navigate("PreparingOrder");
+      }
+    } catch (error) {
+      // Display an error message
+      Alert.alert(
+        "Error",
+        "Failed to place your order. Please try again later."
+      );
+    }
+  };
   return (
     <View style={styles.container}>
       {/* top button */}
@@ -112,7 +139,7 @@ export default function CartScreen() {
         <View>
           <TouchableOpacity
             style={styles.placeOrderButton}
-            onPress={() => navigation.navigate("PreparingOrder")}
+            onPress={handlePlaceOrder}
           >
             <Text style={styles.placeOrderButtonText}>Place Order</Text>
           </TouchableOpacity>

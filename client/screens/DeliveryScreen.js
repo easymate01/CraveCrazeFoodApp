@@ -32,7 +32,7 @@ export default function DeliveryScreen() {
       >
         <Marker
           coordinate={{
-            latitude: restaurant.la  t,
+            latitude: restaurant.lat,
             longitude: restaurant.lng,
           }}
           title={restaurant.name}
