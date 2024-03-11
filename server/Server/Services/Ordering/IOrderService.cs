@@ -1,4 +1,6 @@
-﻿namespace Server.Services.Ordering
+﻿using Server.Models;
+
+namespace Server.Services.Ordering
 {
     public interface IOrderService
     {

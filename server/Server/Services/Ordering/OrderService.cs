@@ -3,7 +3,7 @@ using Server.Models;
 
 namespace Server.Services.Ordering.Repository
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly DataContext _dbContext;
 
