@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Server.Data;
+using Server.Models;
 using Server.Services;
 using Server.Services.AwsS3;
 using Server.Services.Ordering;
@@ -66,6 +67,14 @@ void ConfigureServices()
     builder.Services.AddDbContext<DataContext>();
     builder.Services.AddDbContext<UsersContext>();
 
+    builder.Services.AddIdentity<Customer, IdentityRole>(options =>
+        {
+            // Configure identity options
+        })
+        .AddEntityFrameworkStores<UsersContext>()
+        .AddDefaultTokenProviders();
+
+    builder.Services.AddScoped<UserManager<Customer>>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<IStorageService, StorageService>();
@@ -73,6 +82,7 @@ void ConfigureServices()
     builder.Services.AddScoped<ICartService, CartService>();
     builder.Services.AddScoped<ICartItemService, CartItemService>();
     builder.Services.AddScoped<IOrderService, OrderService>();
+
 
 
 }
@@ -105,7 +115,7 @@ void AddAuthentication()
 void AddIdentity()
 {
     builder.Services
-        .AddIdentityCore<IdentityUser>(options =>
+        .AddIdentityCore<Customer>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false;
             options.User.RequireUniqueEmail = true;

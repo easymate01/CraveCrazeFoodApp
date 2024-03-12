@@ -13,14 +13,14 @@ namespace Server.Controllers
         private readonly ICartService _cartService;
         private readonly ICartItemService _cartItemService;
         private readonly IDish _dishService;
+        private readonly DataContext _dbContext;
 
-
-
-        public CartController(ICartService cartService, ICartItemService cartItemService, IDish dishService)
+        public CartController(ICartService cartService, ICartItemService cartItemService, IDish dishService, DataContext dataContext)
         {
             _cartService = cartService;
             _cartItemService = cartItemService;
             _dishService = dishService;
+            _dbContext = dataContext;
         }
 
         [HttpGet]
@@ -43,10 +43,13 @@ namespace Server.Controllers
         [HttpPost("{userId}/add-items")]
         public async Task<IActionResult> AddItemsToCart(int userId, ICollection<CartItemDto> cartItems)
         {
-            var cart = await _cartService.GetCartByIdAsync(userId);
+            var cart = await _cartService.GetCartByUserId(userId);
+            var user = await _dbContext.Customers.FindAsync(userId);
             if (cart == null)
             {
                 cart = new Cart();
+                user.CartId = cart.CartId;
+                await _dbContext.SaveChangesAsync();
                 await _cartService.CreateCartAsync(cart);
             }
 

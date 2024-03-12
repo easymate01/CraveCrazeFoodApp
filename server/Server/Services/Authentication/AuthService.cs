@@ -1,29 +1,32 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Server.Models;
 
 namespace webapi.Services.Authentication
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Customer> _userManager;
         private readonly ITokenService _tokenService;
-        private readonly DataContext _dataContext;
 
-        public AuthService(UserManager<IdentityUser> userManager, ITokenService tokenService, DataContext dataContext)
+        public AuthService(UserManager<Customer> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
-            _dataContext = dataContext;
         }
         public async Task<AuthResult> RegisterAsync(string email, string username, string password)
         {
-            var result = await _userManager.CreateAsync(
-                new IdentityUser { UserName = username, Email = email }, password);
+
+            // Ensure to set the Address property or any other required properties
+            var customer = new Customer { UserName = username, Email = email, Address = "" };
+
+            var result = await _userManager.CreateAsync(customer, password);
 
             if (!result.Succeeded)
             {
                 return FailedRegistration(result, email, username);
             }
-
+            //_dataContext.Customers.Add(new Customer() { UserName = username, Email = email, IdentityUserId = identityuser.Id });
+            //await _dataContext.SaveChangesAsync();
             return new AuthResult(true, email, username, "");
         }
 
