@@ -142,7 +142,7 @@ namespace Server.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Server.Models.OrderItem", b =>
+            modelBuilder.Entity("Server.Models.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace Server.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("Server.Models.OrderItem", b =>
+            modelBuilder.Entity("Server.Models.CartItem", b =>
                 {
                     b.HasOne("Server.Models.Dish", "Dish")
                         .WithMany()
@@ -266,8 +266,8 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.HasOne("Server.Models.Order", null)
-                        .WithOne("OrderItem")
-                        .HasForeignKey("Server.Models.OrderItem", "OrderId1");
+                        .WithOne("CartItem")
+                        .HasForeignKey("Server.Models.CartItem", "OrderId1");
 
                     b.Navigation("Dish");
 
@@ -278,7 +278,7 @@ namespace Server.Migrations
                 {
                     b.Navigation("Items");
 
-                    b.Navigation("OrderItem")
+                    b.Navigation("CartItem")
                         .IsRequired();
                 });
 

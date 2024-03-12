@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Models;
+using Server.Models.Cart;
 
 public class DataContext : DbContext
 {
@@ -9,7 +10,9 @@ public class DataContext : DbContext
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+
+    public DbSet<CartItem> CartItems { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,14 +23,7 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<OrderItem>()
-            .HasKey(oi => oi.Id);
 
-        modelBuilder.Entity<Order>()
-            .HasMany(o => o.Items)
-            .WithOne(oi => oi.Order)
-            .HasForeignKey(oi => oi.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
 
     }
 

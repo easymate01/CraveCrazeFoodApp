@@ -6,8 +6,6 @@ using Microsoft.OpenApi.Models;
 using Server.Data;
 using Server.Services;
 using Server.Services.AwsS3;
-using Server.Services.Ordering;
-using Server.Services.Ordering.Repository;
 using System.Text;
 using webapi.Services.Authentication;
 
@@ -69,7 +67,7 @@ void ConfigureServices()
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<IStorageService, StorageService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
-    builder.Services.AddScoped<IOrderService, OrderService>();
+    //builder.Services.AddScoped<IOrderService, OrderService>();
 
 
 }

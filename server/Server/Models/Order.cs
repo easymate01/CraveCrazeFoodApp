@@ -14,8 +14,7 @@ namespace Server.Models
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
 
-        public OrderItem OrderItem { get; set; }
-        public List<OrderItem> Items { get; set; }
+        public ICollection<Cart.Cart> Carts { get; set; }
 
         public DateTime Date { get; set; }
     }
