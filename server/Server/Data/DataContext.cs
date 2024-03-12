@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Models;
-using Server.Models.Cart;
+using Server.Models.ShoppingCart;
 
 public class DataContext : DbContext
 {
