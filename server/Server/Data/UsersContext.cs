@@ -13,7 +13,7 @@ namespace Server.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // It would be a good idea to move the connection string to user secrets
-            options.UseSqlServer("Server=localhost,1433;Database=CraveCrase;User Id=sa;Password=yourStrong(!)Password;Encrypt=false;Encrypt=True;TrustServerCertificate=True;");
+            options.UseSqlServer("Server=localhost,1433;Database=Crave_Crase;User Id=sa;Password=yourStrong(!)Password;Encrypt=false;Encrypt=True;TrustServerCertificate=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

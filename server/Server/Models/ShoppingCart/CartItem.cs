@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Server.Models.Cart
+namespace Server.Models.ShoppingCart
 {
     public class CartItem
     {

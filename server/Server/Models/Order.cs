@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Server.Models.ShoppingCart;
+using System.Text.Json.Serialization;
 
 namespace Server.Models
 {
@@ -14,7 +15,7 @@ namespace Server.Models
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
 
-        public ICollection<Cart.Cart> Carts { get; set; }
+        public ICollection<Cart> Carts { get; set; }
 
         public DateTime Date { get; set; }
     }

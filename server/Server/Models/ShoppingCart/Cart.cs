@@ -1,4 +1,4 @@
-﻿namespace Server.Models.Cart
+﻿namespace Server.Models.ShoppingCart
 {
     public class Cart
     {

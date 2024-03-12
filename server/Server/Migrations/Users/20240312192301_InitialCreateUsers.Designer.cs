@@ -12,8 +12,8 @@ using Server.Data;
 namespace Server.Migrations.Users
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20240222163938_addRoles")]
-    partial class addRoles
+    [Migration("20240312192301_InitialCreateUsers")]
+    partial class InitialCreateUsers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
