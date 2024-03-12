@@ -24,7 +24,17 @@ namespace Server.Services.Ordering.ShoppingCart
 
         public async Task<Cart> GetCartByUserId(int id)
         {
-            return await _dbContext.Carts.FindAsync(id);
+            // Find the customer by their ID
+            var customer = await _dbContext.Customers.FindAsync(id);
+
+            if (customer != null)
+            {
+                // Retrieve the cart associated with the customer
+                var cart = _dbContext.Carts.FirstOrDefault(c => c.CartId == customer.CartId);
+                return cart;
+            }
+
+            return null;
         }
 
         public async Task<Cart> CreateCartAsync(Cart cart)
