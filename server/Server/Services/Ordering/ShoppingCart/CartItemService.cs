@@ -26,6 +26,12 @@ namespace Server.Services
                 .Include(item => item.Dish)
                 .FirstOrDefaultAsync(item => item.CartItemId == id);
         }
+        public async Task<List<CartItem>> GetCartItemsByCartIdAsync(int cartId)
+        {
+            return await _dbContext.CartItems
+                .Where(ci => ci.CartId == cartId)
+                .ToListAsync();
+        }
 
         public async Task<CartItem> CreateCartItemAsync(CartItem cartItem)
         {

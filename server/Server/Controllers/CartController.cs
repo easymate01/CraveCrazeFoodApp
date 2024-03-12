@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.DTOs;
 using Server.Models.ShoppingCart;
+using Server.Services;
 using Server.Services.Ordering.ShoppingCart;
 
 namespace Server.Controllers
@@ -10,12 +12,15 @@ namespace Server.Controllers
     {
         private readonly ICartService _cartService;
         private readonly ICartItemService _cartItemService;
+        private readonly IDish _dishService;
 
 
-        public CartController(ICartService cartService, ICartItemService cartItemService)
+
+        public CartController(ICartService cartService, ICartItemService cartItemService, IDish dishService)
         {
             _cartService = cartService;
             _cartItemService = cartItemService;
+            _dishService = dishService;
         }
 
         [HttpGet]
@@ -35,29 +40,42 @@ namespace Server.Controllers
             return Ok(cart);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Cart>> CreateCart(Cart cart)
-        {
-            var createdCart = await _cartService.CreateCartAsync(cart);
-            return CreatedAtAction(nameof(GetCartById), new { id = createdCart.CartId }, createdCart);
-        }
-
         [HttpPost("{cartId}/add-items")]
-        public async Task<IActionResult> AddItemsToCart(int cartId, ICollection<CartItem> cartItems)
+        public async Task<IActionResult> AddItemsToCart(int cartId, ICollection<CartItemDto> cartItems)
         {
             var cart = await _cartService.GetCartByIdAsync(cartId);
             if (cart == null)
-                return NotFound("Cart not found");
-
-            foreach (var item in cartItems)
             {
-                // Beállítjuk a CartId-t a megfelelő értékre
-                item.CartId = cartId;
-                await _cartItemService.CreateCartItemAsync(item);
+                cart = new Cart();
+                await _cartService.CreateCartAsync(cart);
             }
+
+            foreach (var itemDto in cartItems)
+            {
+                var dish = await _dishService.GetByIdAsync(itemDto.DishId);
+                if (dish == null)
+                {
+                    // Kezeljük a hibát, ha a megadott étel nem található
+                    return BadRequest($"Dish with ID {itemDto.DishId} not found");
+                }
+
+                var cartItem = new CartItem()
+                {
+                    CartId = cart.CartId,
+                    DishId = itemDto.DishId,
+                    Dish = dish,
+                    Quantity = itemDto.Quantity,
+                };
+
+                await _cartItemService.CreateCartItemAsync(cartItem);
+            }
+
+            // Ha minden sikeres volt, beállítjuk a CartItems-t a Cart-hoz
+            cart.CartItems = await _cartItemService.GetCartItemsByCartIdAsync(cart.CartId);
 
             return Ok("Items added to cart successfully");
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCart(int id, Cart cart)
