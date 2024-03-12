@@ -21,50 +21,6 @@ namespace Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Server.Models.Cart.Cart", b =>
-                {
-                    b.Property<int>("CartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("Server.Models.Cart.CartItem", b =>
-                {
-                    b.Property<int>("CartItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DishId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartItemId");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("DishId");
-
-                    b.ToTable("CartItems");
-                });
-
             modelBuilder.Entity("Server.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -100,6 +56,9 @@ namespace Server.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -166,7 +125,9 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.HasIndex("CartId");
+
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Server.Models.Dish", b =>
@@ -274,28 +235,59 @@ namespace Server.Migrations
                     b.ToTable("Restaurants");
                 });
 
-            modelBuilder.Entity("Server.Models.Cart.Cart", b =>
+            modelBuilder.Entity("Server.Models.ShoppingCart.Cart", b =>
                 {
-                    b.HasOne("Server.Models.Order", null)
-                        .WithMany("Carts")
-                        .HasForeignKey("OrderId");
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("Server.Models.Cart.CartItem", b =>
+            modelBuilder.Entity("Server.Models.ShoppingCart.CartItem", b =>
                 {
-                    b.HasOne("Server.Models.Cart.Cart", null)
-                        .WithMany("CartItems")
+                    b.Property<int>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DishId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("DishId");
+
+                    b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("Server.Models.Customer", b =>
+                {
+                    b.HasOne("Server.Models.ShoppingCart.Cart", "Cart")
+                        .WithMany()
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Dish", "Dish")
-                        .WithMany()
-                        .HasForeignKey("DishId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dish");
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Server.Models.Dish", b =>
@@ -328,9 +320,28 @@ namespace Server.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("Server.Models.Cart.Cart", b =>
+            modelBuilder.Entity("Server.Models.ShoppingCart.Cart", b =>
                 {
-                    b.Navigation("CartItems");
+                    b.HasOne("Server.Models.Order", null)
+                        .WithMany("Carts")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("Server.Models.ShoppingCart.CartItem", b =>
+                {
+                    b.HasOne("Server.Models.ShoppingCart.Cart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.Dish", "Dish")
+                        .WithMany()
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dish");
                 });
 
             modelBuilder.Entity("Server.Models.Order", b =>
@@ -341,6 +352,11 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.Restaurant", b =>
                 {
                     b.Navigation("Dishes");
+                });
+
+            modelBuilder.Entity("Server.Models.ShoppingCart.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Server.Models.ShoppingCart;
 
 namespace Server.Models
 {
@@ -13,6 +14,8 @@ namespace Server.Models
         public string PostalCode { get; set; }
         public string Address { get; set; }
 
+        public int CartId { get; set; }
+        public Cart Cart { get; set; }
 
     }
 }

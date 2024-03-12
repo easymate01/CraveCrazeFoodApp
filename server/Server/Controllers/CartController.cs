@@ -40,10 +40,10 @@ namespace Server.Controllers
             return Ok(cart);
         }
 
-        [HttpPost("{cartId}/add-items")]
-        public async Task<IActionResult> AddItemsToCart(int cartId, ICollection<CartItemDto> cartItems)
+        [HttpPost("{userId}/add-items")]
+        public async Task<IActionResult> AddItemsToCart(int userId, ICollection<CartItemDto> cartItems)
         {
-            var cart = await _cartService.GetCartByIdAsync(cartId);
+            var cart = await _cartService.GetCartByIdAsync(userId);
             if (cart == null)
             {
                 cart = new Cart();

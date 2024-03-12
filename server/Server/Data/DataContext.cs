@@ -13,7 +13,7 @@ public class DataContext : DbContext
     public DbSet<Cart> Carts { get; set; }
 
     public DbSet<CartItem> CartItems { get; set; }
-
+    public DbSet<Customer> Customers { get; set; }
 
 
 

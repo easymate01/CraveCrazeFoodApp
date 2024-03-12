@@ -22,6 +22,11 @@ namespace Server.Services.Ordering.ShoppingCart
             return await _dbContext.Carts.FindAsync(id);
         }
 
+        public async Task<Cart> GetCartByUserId(int id)
+        {
+            return await _dbContext.Carts.FindAsync(id);
+        }
+
         public async Task<Cart> CreateCartAsync(Cart cart)
         {
             _dbContext.Carts.Add(cart);
