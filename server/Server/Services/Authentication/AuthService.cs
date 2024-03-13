@@ -17,7 +17,7 @@ namespace webapi.Services.Authentication
         {
 
             // Ensure to set the Address property or any other required properties
-            var customer = new Customer { UserName = username, Email = email, Address = "" };
+            var customer = new Customer { UserName = username, Email = email, };
 
             var result = await _userManager.CreateAsync(customer, password);
 
