@@ -25,8 +25,12 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Customer>()
+            .HasOne(u => u.IdentityUser)
+            .WithMany()
+            .HasForeignKey(p => p.IdentityUserId)
+            .IsRequired(false);
     }
 
 

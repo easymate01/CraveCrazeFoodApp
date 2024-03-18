@@ -16,23 +16,42 @@ namespace webapi.Services.Authentication
         }
         public async Task<AuthResult> RegisterAsync(string email, string username, string password)
         {
+            using var transaction = await _dataContext.Database.BeginTransactionAsync();
 
-            // Ensure to set the Address property or any other required properties
-            var identityuser = new IdentityUser { UserName = username, Email = email };
-
-            var result = await _userManager.CreateAsync(identityuser, password);
-
-            if (!result.Succeeded)
+            try
             {
-                return FailedRegistration(result, email, username);
+                var identityUser = new IdentityUser { UserName = username, Email = email };
+
+                var result = await _userManager.CreateAsync(identityUser, password);
+
+                if (!result.Succeeded)
+                {
+                    return FailedRegistration(result, email, username);
+                }
+
+                var customer = new Customer
+                {
+                    UserName = username,
+                    Email = email,
+                    IdentityUserId = identityUser.Id
+                };
+
+                _dataContext.Customers.Add(customer);
+
+                await _dataContext.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                return new AuthResult(true, identityUser.Id, email, username, "");
             }
-            await _userManager.AddToRoleAsync(identityuser, "User");
-
-            _dataContext.Customers.Add(new Customer { UserName = username, Email = email, IdentityUserId = identityuser.Id });
-
-            await _dataContext.SaveChangesAsync();
-            return new AuthResult(true, identityuser.Id, email, username, "");
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("An error occurred during registration.", ex);
+            }
         }
+
+
 
         private static AuthResult FailedRegistration(IdentityResult result, string email, string username)
         {
