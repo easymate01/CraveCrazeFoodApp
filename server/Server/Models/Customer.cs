@@ -26,7 +26,8 @@ namespace Server.Models
 
         public Customer()
         {
-            Id = new Guid().ToString();
+            Id = Guid.NewGuid().ToString();
         }
+
     }
 }
