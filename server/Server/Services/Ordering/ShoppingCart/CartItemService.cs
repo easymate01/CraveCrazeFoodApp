@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Server.DTOs;
 using Server.Models.ShoppingCart;
 using Server.Services.Ordering.ShoppingCart;
 
@@ -34,18 +33,11 @@ namespace Server.Services
                 .ToListAsync();
         }
 
-        public async Task<CartItem> CreateCartItemAsync(CartItemDto cartItem)
+        public async Task<CartItem> CreateCartItemAsync(CartItem cartItem)
         {
-
-            var newCartItem = new CartItem
-            {
-                DishId = cartItem.DishId,
-                Quantity = cartItem.Quantity,
-            };
-
-            _dbContext.CartItems.Add(newCartItem);
+            _dbContext.CartItems.Add(cartItem);
             await _dbContext.SaveChangesAsync();
-            return newCartItem;
+            return cartItem;
         }
 
         public async Task<bool> UpdateCartItemAsync(int id, CartItem cartItem)

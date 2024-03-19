@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Server.DTOs;
 using Server.Models.ShoppingCart;
 using Server.Services.Ordering.ShoppingCart;
 
@@ -34,7 +33,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CartItem>> CreateCartItem(CartItemDto cartItem)
+        public async Task<ActionResult<CartItem>> CreateCartItem(CartItem cartItem)
         {
             var createdCartItem = await _cartItemService.CreateCartItemAsync(cartItem);
             return CreatedAtAction(nameof(GetCartItemById), new { id = createdCartItem.CartItemId }, createdCartItem);

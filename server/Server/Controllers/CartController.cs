@@ -40,44 +40,42 @@ namespace Server.Controllers
             return Ok(cart);
         }
 
-        [HttpPost("{userId}/add-items")]
-        public async Task<IActionResult> AddItemsToCart(string userId, ICollection<CartItemDto> cartItems)
+        [HttpPost("{userId}/add-item")]
+        public async Task<IActionResult> AddItemToCart(string userId, CartItemDto cartItem)
         {
             var cart = await _cartService.GetCartByUserId(userId);
-            var customer = await _dbContext.Customers.FindAsync(userId);
+
             if (cart == null)
             {
                 cart = new Cart();
-                customer.CartId = cart.CartId;
                 await _cartService.CreateCartAsync(cart);
+
+                // Frissítsd a Customer entitás CartId mezőjét
+                var customer = await _dbContext.Customers.FindAsync(userId);
+                customer.CartId = cart.CartId;
                 await _dbContext.SaveChangesAsync();
             }
 
-            foreach (var itemDto in cartItems)
+            var dish = await _dishService.GetByIdAsync(cartItem.DishId);
+            if (dish == null)
             {
-                var dish = await _dishService.GetByIdAsync(itemDto.DishId);
-                if (dish == null)
-                {
-                    // Kezeljük a hibát, ha a megadott étel nem található
-                    return BadRequest($"Dish with ID {itemDto.DishId} not found");
-                }
-
-                var cartItem = new CartItem()
-                {
-                    CartId = cart.CartId,
-                    DishId = itemDto.DishId,
-                    Dish = dish,
-                    Quantity = itemDto.Quantity,
-                };
-
-                //await _cartItemService.CreateCartItemAsync(cartItem);
+                // Kezeljük a hibát, ha a megadott étel nem található
+                return BadRequest($"Dish with ID {cartItem.DishId} not found");
             }
 
-            // Ha minden sikeres volt, beállítjuk a CartItems-t a Cart-hoz
-            cart.CartItems = await _cartItemService.GetCartItemsByCartIdAsync(cart.CartId);
+            var cartItemEntity = new CartItem()
+            {
+                CartId = cart.CartId,
+                DishId = cartItem.DishId,
+                Dish = dish,
+                Quantity = cartItem.Quantity,
+            };
 
-            return Ok("Items added to cart successfully");
+            await _cartItemService.CreateCartItemAsync(cartItemEntity);
+
+            return Ok("Item added to cart successfully");
         }
+
 
 
         [HttpPut("{id}")]
