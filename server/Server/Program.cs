@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Server.Data;
 using Server.Services;
 using Server.Services.AwsS3;
 using Server.Services.Ordering;
@@ -64,15 +63,6 @@ void ConfigureServices()
     builder.Services.AddTransient<IDish, DishService>();
 
     builder.Services.AddDbContext<DataContext>();
-    builder.Services.AddDbContext<UsersContext>();
-
-    builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-        {
-            // Configure identity options
-        })
-        .AddEntityFrameworkStores<UsersContext>()
-        .AddDefaultTokenProviders();
-
 
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
@@ -125,7 +115,7 @@ void AddIdentity()
             options.Password.RequireLowercase = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<UsersContext>();
+        .AddEntityFrameworkStores<DataContext>();
 }
 
 void ConfigureSwagger()
