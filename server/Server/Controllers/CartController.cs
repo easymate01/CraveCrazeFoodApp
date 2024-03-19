@@ -41,7 +41,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("{userId}/add-item")]
-        public async Task<IActionResult> AddItemToCart(string userId, CartItemDto cartItem)
+        public async Task<ActionResult<Cart>> AddItemToCart(string userId, CartItemDto cartItem)
         {
             var cart = await _cartService.GetCartByUserId(userId);
 
@@ -73,7 +73,7 @@ namespace Server.Controllers
 
             await _cartItemService.CreateCartItemAsync(cartItemEntity);
 
-            return Ok("Item added to cart successfully");
+            return Ok(cart);
         }
 
 
