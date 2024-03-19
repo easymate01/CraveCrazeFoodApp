@@ -1,4 +1,5 @@
-﻿using Server.Models.ShoppingCart;
+﻿using Server.DTOs;
+using Server.Models.ShoppingCart;
 
 namespace Server.Services.Ordering.ShoppingCart
 {
@@ -6,7 +7,7 @@ namespace Server.Services.Ordering.ShoppingCart
     {
         Task<List<CartItem>> GetAllCartItemsAsync();
         Task<CartItem> GetCartItemByIdAsync(int id);
-        Task<CartItem> CreateCartItemAsync(CartItem cartItem);
+        Task<CartItem> CreateCartItemAsync(CartItemDto cartItem);
         Task<bool> UpdateCartItemAsync(int id, CartItem cartItem);
         Task<bool> DeleteCartItemAsync(int id);
         Task<List<CartItem>> GetCartItemsByCartIdAsync(int cartId);

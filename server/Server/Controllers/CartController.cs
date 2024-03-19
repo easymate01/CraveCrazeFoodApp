@@ -41,16 +41,16 @@ namespace Server.Controllers
         }
 
         [HttpPost("{userId}/add-items")]
-        public async Task<IActionResult> AddItemsToCart(int userId, ICollection<CartItemDto> cartItems)
+        public async Task<IActionResult> AddItemsToCart(string userId, ICollection<CartItemDto> cartItems)
         {
             var cart = await _cartService.GetCartByUserId(userId);
-            var user = await _dbContext.Customers.FindAsync(userId);
+            var customer = await _dbContext.Customers.FindAsync(userId);
             if (cart == null)
             {
                 cart = new Cart();
-                user.CartId = cart.CartId;
-                await _dbContext.SaveChangesAsync();
+                customer.CartId = cart.CartId;
                 await _cartService.CreateCartAsync(cart);
+                await _dbContext.SaveChangesAsync();
             }
 
             foreach (var itemDto in cartItems)
@@ -70,7 +70,7 @@ namespace Server.Controllers
                     Quantity = itemDto.Quantity,
                 };
 
-                await _cartItemService.CreateCartItemAsync(cartItem);
+                //await _cartItemService.CreateCartItemAsync(cartItem);
             }
 
             // Ha minden sikeres volt, beállítjuk a CartItems-t a Cart-hoz
