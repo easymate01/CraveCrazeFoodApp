@@ -52,6 +52,11 @@ namespace Server.Controllers
 
                 // Frissítsd a Customer entitás CartId mezőjét
                 var customer = await _dbContext.Customers.FindAsync(userId);
+                if (customer == null)
+                {
+                    return BadRequest($"User with ID {userId} not found");
+
+                }
                 customer.CartId = cart.CartId;
                 await _dbContext.SaveChangesAsync();
             }

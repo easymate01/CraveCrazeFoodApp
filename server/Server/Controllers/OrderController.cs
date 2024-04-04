@@ -65,16 +65,16 @@ namespace Server.Controllers
         //[HttpPost("place-order")]
         //public async Task<ActionResult<Order>> PlaceOrder(int customerId, int restaurantId, ICollection<CartItem> cartItems)
         //{
-        //    // Create the order from the cart items
-        //    var order = new Order
-        //    {
-        //        CustomerId = customerId,
-        //        RestaurantId = restaurantId,
-        //        Carts = cartItems
-        //    };
+        //    Create the order from the cart items
+        //   var order = new Order
+        //   {
+        //       CustomerId = customerId,
+        //       RestaurantId = restaurantId,
+        //       Carts = cartItems
+        //   };
 
-        //    // Save the order
-        //    var newOrder = await _orderService.CreateOrderAsync(order);
+        //    Save the order
+        //   var newOrder = await _orderService.CreateOrderAsync(order);
         //    return CreatedAtAction(nameof(GetOrderById), new { id = newOrder.OrderId }, newOrder);
         //}
     }
