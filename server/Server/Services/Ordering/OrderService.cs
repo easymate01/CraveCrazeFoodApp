@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.DTOs;
 using Server.Models;
 
 namespace Server.Services.Ordering.Repository
@@ -27,11 +28,43 @@ namespace Server.Services.Ordering.Repository
                 .FirstOrDefaultAsync(o => o.OrderId == id);
         }
 
-        public async Task<Order> CreateOrderAsync(Order order)
+
+
+        public async Task<Order> CreateOrderAsync(OrderDto orderDto)
         {
-            order.Date = DateTime.Now;
+            if (orderDto == null)
+                throw new ArgumentNullException(nameof(orderDto));
+
+            var customer = await _dbContext.Customers.FindAsync(orderDto.CustomerId);
+
+            if (customer == null)
+                throw new ArgumentException("Customer not found");
+
+            var restaurant = await _dbContext.Restaurants.FindAsync(orderDto.RestaurantId);
+
+            if (restaurant == null)
+                throw new ArgumentException("Restaurant not found");
+
+            var cart = await _dbContext.Carts.FindAsync(orderDto.CartId);
+
+            if (cart == null)
+                throw new ArgumentException("Cart not found");
+
+            var order = new Order
+            {
+                RestaurantId = orderDto.RestaurantId,
+                CustomerId = orderDto.CustomerId,
+                CartId = orderDto.CartId,
+                Date = DateTime.Now
+            };
+
+            order.Customer = customer;
+            order.Restaurant = restaurant;
+            order.Cart = cart;
+
             _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync();
+
             return order;
         }
 
