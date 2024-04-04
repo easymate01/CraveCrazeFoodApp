@@ -34,7 +34,7 @@ namespace Server.Controllers
             return Ok(order);
         }
 
-        [HttpPost]
+        [HttpPost("CreateOrder")]
         public async Task<IActionResult> CreateOrder(OrderDto orderDto)
         {
             try

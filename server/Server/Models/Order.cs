@@ -13,7 +13,7 @@ namespace Server.Models
 
         [JsonIgnore]
         public Customer Customer { get; set; }
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         [JsonIgnore]
 
         public Cart Cart { get; set; }
