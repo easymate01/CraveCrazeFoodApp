@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.DTOs;
 using Server.Models;
 using Server.Services.Ordering;
 
@@ -34,10 +35,25 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(Order order)
+        public async Task<IActionResult> CreateOrder(OrderDto orderDto)
         {
-            var newOrder = await _orderService.CreateOrderAsync(order);
-            return CreatedAtAction(nameof(GetOrderById), new { id = newOrder.OrderId }, newOrder);
+            try
+            {
+                var order = await _orderService.CreateOrderAsync(orderDto);
+                return CreatedAtAction(nameof(GetAllOrders), new { id = order.OrderId }, order);
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Order data is missing.");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpPut("{id}")]
