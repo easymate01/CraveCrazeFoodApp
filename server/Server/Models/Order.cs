@@ -14,8 +14,10 @@ namespace Server.Models
         [JsonIgnore]
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
+        [JsonIgnore]
 
-        public ICollection<Cart> Carts { get; set; }
+        public Cart Cart { get; set; }
+        public int CartId { get; set; }
 
         public DateTime Date { get; set; }
     }

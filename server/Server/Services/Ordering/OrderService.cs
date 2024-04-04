@@ -16,14 +16,14 @@ namespace Server.Services.Ordering.Repository
         public async Task<List<Order>> GetAllOrdersAsync()
         {
             return await _dbContext.Orders
-                .Include(o => o.Carts)
+                .Include(o => o.Cart)
                 .ToListAsync();
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
             return await _dbContext.Orders
-                .Include(o => o.Carts)
+                .Include(o => o.Cart)
                 .FirstOrDefaultAsync(o => o.OrderId == id);
         }
 
@@ -45,7 +45,7 @@ namespace Server.Services.Ordering.Repository
 
             existingOrder.CustomerId = order.CustomerId;
             existingOrder.RestaurantId = order.RestaurantId;
-            existingOrder.Carts = order.Carts;
+            existingOrder.Cart = order.Cart;
             existingOrder.Date = order.Date;
 
             await _dbContext.SaveChangesAsync();
