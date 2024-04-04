@@ -41,7 +41,7 @@ namespace Server.Services
                 throw new ArgumentException("Restaurant with the provided ID does not exist.", nameof(restaurantId));
             }
 
-            var newDish = new Dish
+            var newDish = new Dish(dish.Price)
             {
                 Name = dish.Name,
                 Description = dish.Description,

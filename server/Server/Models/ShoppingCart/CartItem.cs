@@ -16,6 +16,16 @@ namespace Server.Models.ShoppingCart
         {
             get
             {
+                if (Dish == null)
+                {
+                    throw new InvalidOperationException("Dish is not set for the cart item.");
+                }
+
+                if (Dish.Price <= 0)
+                {
+                    throw new InvalidOperationException("Price of the dish cannot be zero.");
+                }
+
                 return Dish.Price * Quantity;
             }
         }

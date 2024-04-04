@@ -14,7 +14,8 @@ namespace Server.Services.Ordering.ShoppingCart
 
         public async Task<List<Cart>> GetAllCartsAsync()
         {
-            return await _dbContext.Carts.ToListAsync();
+            return await _dbContext.Carts.Include(r => r.CartItems) // Include the dishes
+                .ToListAsync(); ;
         }
 
         public async Task<Cart> GetCartByIdAsync(int id)
