@@ -12,5 +12,14 @@ namespace Server.Models
         public int RestaurantId { get; set; }
         [JsonIgnore]
         public Restaurant Restaurant { get; set; }
+
+        public Dish(decimal price)
+        {
+            if (price <= 0)
+            {
+                throw new ArgumentException("Price of the dish cannot be zero or negative.");
+            }
+            Price = price;
+        }
     }
 }

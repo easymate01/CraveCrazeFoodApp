@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Server.Data;
 using Server.Services;
 using Server.Services.AwsS3;
+using Server.Services.Ordering;
+using Server.Services.Ordering.Repository;
+using Server.Services.Ordering.ShoppingCart;
 using System.Text;
 using webapi.Services.Authentication;
 
@@ -61,12 +63,16 @@ void ConfigureServices()
     builder.Services.AddTransient<IDish, DishService>();
 
     builder.Services.AddDbContext<DataContext>();
-    builder.Services.AddDbContext<UsersContext>();
 
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<IStorageService, StorageService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddScoped<ICartService, CartService>();
+    builder.Services.AddScoped<ICartItemService, CartItemService>();
+    builder.Services.AddScoped<IOrderService, OrderService>();
+
+
 
 }
 
@@ -109,7 +115,7 @@ void AddIdentity()
             options.Password.RequireLowercase = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<UsersContext>();
+        .AddEntityFrameworkStores<DataContext>();
 }
 
 void ConfigureSwagger()

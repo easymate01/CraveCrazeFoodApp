@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240319181824_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,10 +326,10 @@ namespace Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<int>("CartId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId")
+                    b.Property<string>("CustomerId1")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -338,9 +341,7 @@ namespace Server.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId1");
 
                     b.HasIndex("RestaurantId");
 
@@ -401,7 +402,12 @@ namespace Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.HasKey("CartId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Carts");
                 });
@@ -511,15 +517,9 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.Order", b =>
                 {
-                    b.HasOne("Server.Models.ShoppingCart.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Server.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("CustomerId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -529,11 +529,16 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cart");
-
                     b.Navigation("Customer");
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Server.Models.ShoppingCart.Cart", b =>
+                {
+                    b.HasOne("Server.Models.Order", null)
+                        .WithMany("Carts")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Server.Models.ShoppingCart.CartItem", b =>
@@ -551,6 +556,11 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Dish");
+                });
+
+            modelBuilder.Entity("Server.Models.Order", b =>
+                {
+                    b.Navigation("Carts");
                 });
 
             modelBuilder.Entity("Server.Models.Restaurant", b =>
