@@ -23,7 +23,12 @@ namespace Server.Services
             return await _dbContext.Dishes.FindAsync(id);
         }
 
-
+        public async Task<List<Dish>> GetDishesByRestaurantIdAsync(int restaurantId)
+        {
+            return await _dbContext.Dishes
+                .Where(d => d.RestaurantId == restaurantId)
+                .ToListAsync();
+        }
         public async Task<Dish> CreateAsync(DishDto dish, int restaurantId)
         {
             if (dish == null)
