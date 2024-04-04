@@ -7,10 +7,10 @@ namespace Server.Controllers
     [ApiController]
     public class FeaturedController : ControllerBase
     {
-        private readonly RestaurantService _restaurantService;
-        private readonly DishService _dishService;
+        private readonly IRestaurant _restaurantService;
+        private readonly IDish _dishService;
 
-        public FeaturedController(RestaurantService restaurantService, DishService dishService)
+        public FeaturedController(IRestaurant restaurantService, IDish dishService)
         {
             _restaurantService = restaurantService;
             _dishService = dishService;
@@ -21,47 +21,44 @@ namespace Server.Controllers
         {
             try
             {
-                // Get featured restaurants from the database
+                // Fetch data from the service
                 var featuredRestaurants = await _restaurantService.GetAllAsync();
 
-                // Create a list to store the formatted response
-                var response = new List<object>();
-
-                // Iterate over each featured restaurant and format the data
-                foreach (var restaurant in featuredRestaurants)
+                // Map the fetched data to the desired response structure
+                var response = new
                 {
-                    var dishes = await _dishService.GetDishesByRestaurantIdAsync(restaurant.Id);
-
-                    var formattedRestaurant = new
+                    id = 1,
+                    title = "Hot and Spicy",
+                    description = "soft and tender fried chicken",
+                    restaurants = featuredRestaurants.Select(r => new
                     {
-                        id = restaurant.Id,
-                        name = restaurant.Name,
-                        image = restaurant.Image,
-                        description = restaurant.Description,
-                        lng = restaurant.Lng,
-                        lat = restaurant.Lat,
-                        address = restaurant.Address,
-                        stars = restaurant.Stars,
-                        reviews = restaurant.Reviews,
-                        category = restaurant.Category,
-                        dishes = dishes.Select(d => new
+                        id = r.Id,
+                        name = r.Name,
+                        image = r.Image,
+                        description = r.Description,
+                        lng = r.Lng,
+                        lat = r.Lat,
+                        address = r.Address,
+                        stars = r.Stars,
+                        reviews = r.Reviews,
+                        category = r.Category,
+                        dishes = r.Dishes.Select(d => new
                         {
                             id = d.Id,
                             name = d.Name,
                             description = d.Description,
                             price = d.Price,
                             image = d.Image
-                        }).ToList()
-                    };
+                        })
+                    })
+                };
 
-                    response.Add(formattedRestaurant);
-                }
-
-                return Ok(response);
+                // Return the response
+                return new OkObjectResult(response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing your request.");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
     }
