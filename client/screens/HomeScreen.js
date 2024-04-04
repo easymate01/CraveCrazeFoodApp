@@ -1,14 +1,30 @@
 import * as Icon from "react-native-feather";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
 import { featured } from "../constants";
+import getFeatured from "../services/GetDatas/getFeatured";
 
 function HomeScreen() {
+  const [featuredData, setFeaturedData] = useState([]);
+
+  useEffect(() => {
+    fetchFeaturedData();
+  }, []);
+
+  const fetchFeaturedData = async () => {
+    try {
+      const data = await getFeatured();
+      setFeaturedData(data);
+    } catch (error) {
+      console.error("Error fetching featured data:", error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={styles.searchBarContainer} />
@@ -35,7 +51,7 @@ function HomeScreen() {
         <Categories />
 
         <View style={{ marginTop: 5 }}>
-          {[featured, featured, featured].map((item, index) => {
+          {featuredData.map((item, index) => {
             return (
               <FeaturedRow
                 key={index}
