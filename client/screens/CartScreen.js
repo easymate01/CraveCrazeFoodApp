@@ -18,7 +18,7 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../slices/cartSlice";
-import placeOrder from "../services/orderService";
+import placeOrder from "../services/Ordering/orderService";
 
 export default function CartScreen() {
   const [groupedItems, setGroupedItems] = useState({});
