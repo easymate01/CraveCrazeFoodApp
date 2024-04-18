@@ -49,21 +49,17 @@ function HomeScreen() {
             <Text style={styles.locationText}>Budapest</Text>
           </View>
         </View>
-
         <View style={styles.slidersContainer}>
           <TouchableOpacity onPress={toggleDrawer}>
             <Icon.Sliders height="20" strokeWidth={2.5} stroke="white" />
           </TouchableOpacity>
         </View>
 
-        <View
-          style={[styles.drawer, { display: isDrawerOpen ? "flex" : "none" }]}
-        >
-          <CustomDrawerLayout isOpen={isDrawerOpen} onClose={toggleDrawer}>
-            {/* Drawer content goes here */}
-            <Text>Drawer Content</Text>
-          </CustomDrawerLayout>
-        </View>
+        <CustomDrawerLayout
+          isOpen={isDrawerOpen}
+          onClose={toggleDrawer}
+          drawerContent={<Text>Ez egy szöveg a fiókban</Text>}
+        ></CustomDrawerLayout>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
