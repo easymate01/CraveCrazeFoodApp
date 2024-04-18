@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { themeColors } from "../theme";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ const RegisterScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Register" onPress={handleRegister} />
+      <Button style title="Register" onPress={handleRegister} />
       <Button
         title="Go to Login"
         onPress={() => navigation.navigate("Login")}
@@ -57,9 +58,12 @@ const styles = StyleSheet.create({
     width: "80%",
     marginBottom: 10,
     padding: 10,
-    borderWidth: 1,
     borderColor: "#ccc",
+    borderWidth: 1,
     borderRadius: 5,
+  },
+  button: {
+    borderColor: themeColors.bgColor(1),
   },
 });
 
