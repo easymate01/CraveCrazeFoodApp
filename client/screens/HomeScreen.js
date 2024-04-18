@@ -1,6 +1,13 @@
 import * as Icon from "react-native-feather";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
@@ -8,12 +15,17 @@ import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
 import { featured } from "../constants";
 import getFeatured from "../services/GetDatas/getFeatured";
+import CustomDrawerLayout from "../components/customDrawerLayout";
 
 function HomeScreen() {
   const [featuredData, setFeaturedData] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
   useEffect(() => {
-    fetchFeaturedData();
+    // fetchFeaturedData();
   }, []);
 
   const fetchFeaturedData = async () => {
@@ -39,7 +51,18 @@ function HomeScreen() {
         </View>
 
         <View style={styles.slidersContainer}>
-          <Icon.Sliders height="20" strokeWidth={2.5} stroke="white" />
+          <TouchableOpacity onPress={toggleDrawer}>
+            <Icon.Sliders height="20" strokeWidth={2.5} stroke="white" />
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={[styles.drawer, { display: isDrawerOpen ? "flex" : "none" }]}
+        >
+          <CustomDrawerLayout isOpen={isDrawerOpen} onClose={toggleDrawer}>
+            {/* Drawer content goes here */}
+            <Text>Drawer Content</Text>
+          </CustomDrawerLayout>
         </View>
       </View>
       <ScrollView
