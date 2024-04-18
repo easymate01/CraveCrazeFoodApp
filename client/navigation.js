@@ -33,6 +33,8 @@ export default function Navigation() {
           options={{ presentation: "fullScreenModal" }}
           component={DeliveryScreen}
         />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
