@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Modal, TouchableOpacity, View, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import * as Icon from "react-native-feather";
+import { useSelector } from "react-redux";
+import { selectCartItems, selectCartTotal } from "../slices/cartSlice";
 
 const CustomDrawerLayout = ({ isOpen, onClose, drawerContent }) => {
   const navigation = useNavigation();
@@ -8,6 +11,8 @@ const CustomDrawerLayout = ({ isOpen, onClose, drawerContent }) => {
     navigation.navigate(screenName);
     onClose();
   };
+
+  const cartItems = useSelector(selectCartTotal);
   return (
     <Modal
       animationType="slide"
@@ -18,7 +23,16 @@ const CustomDrawerLayout = ({ isOpen, onClose, drawerContent }) => {
       <View style={styles.container}>
         <View style={styles.drawer}>
           <View style={styles.mainContent}>
-            <Text style={styles.userName}>Gulyás Máté</Text>
+            <View style={styles.ShoppingCartContainer}>
+              <Text style={styles.userName}>Gulyás Máté</Text>
+              <Icon.ShoppingCart
+                height="25"
+                stroke="gray"
+                onPress={() => navigateToScreen("Cart")}
+              />
+
+              <Text>{cartItems}</Text>
+            </View>
 
             <View style={styles.menuContainer}>
               <TouchableOpacity
@@ -49,6 +63,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "transparent",
+  },
+  ShoppingCartContainer: {
+    flexDirection: "row",
+    paddingVertical: 20,
   },
   drawer: {
     position: "absolute",
