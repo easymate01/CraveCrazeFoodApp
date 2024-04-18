@@ -25,10 +25,18 @@ const LoginScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <View style={styles.buttonContainer}>
+        <Button style={styles.button} title="Login" onPress={handleLogin} />
+        <Button
+          style={styles.button}
+          title="Go to Register"
+          onPress={() => navigation.navigate("Register")}
+        />
+      </View>
       <Button
-        title="Go to Register"
-        onPress={() => navigation.navigate("Register")}
+        style={styles.continue}
+        title="Continue without an account."
+        onPress={() => navigation.navigate("Home")}
       />
     </View>
   );
@@ -51,8 +59,23 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
   },
+  buttonContainer: {
+    width: "80%",
+    marginBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   button: {
-    color: themeColors.bgColor(1),
+    flex: 1,
+    backgroundColor: themeColors.bgColor(1),
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  continue: {
+    position: "absolute",
+    bottom: 60,
   },
 });
 export default LoginScreen;
