@@ -39,13 +39,53 @@ const CustomDrawerLayout = ({ isOpen, onClose, drawerContent }) => {
                 style={styles.drawerLink}
                 onPress={() => navigateToScreen("Home")}
               >
-                <Text style={styles.drawerLinkText}>Home</Text>
+                <View style={styles.IconsContainer}>
+                  <Icon.Home style={styles.icons} height="25" stroke="gray" />
+                  <Text style={styles.drawerLinkText}>Home</Text>
+                </View>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={styles.drawerLink}
                 onPress={() => navigateToScreen("Register")}
               >
-                <Text style={styles.drawerLinkText}>Register</Text>
+                <View style={styles.IconsContainer}>
+                  <Icon.User style={styles.icons} height="25" stroke="gray" />
+
+                  <Text style={styles.drawerLinkText}>Register</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.drawerLink}>
+                <View style={styles.IconsContainer}>
+                  <Icon.Settings
+                    style={styles.icons}
+                    height="25"
+                    stroke="gray"
+                  />
+
+                  <Text style={styles.drawerLinkText}>Settings</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.drawerLink}>
+                <View style={styles.IconsContainer}>
+                  <Icon.Database
+                    style={styles.icons}
+                    height="25"
+                    stroke="gray"
+                  />
+
+                  <Text style={styles.drawerLinkText}>
+                    Cupons and Discounts
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.drawerLink}>
+                <View style={styles.IconsContainer}>
+                  <Icon.User style={styles.icons} height="25" stroke="gray" />
+
+                  <Text style={styles.drawerLinkText}>My Orders</Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -68,6 +108,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 20,
   },
+  IconsContainer: {
+    flexDirection: "row",
+  },
+  icons: {
+    marginRight: 20,
+  },
   drawer: {
     position: "absolute",
     top: 0,
@@ -89,6 +135,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 20,
+    marginRight: 20,
   },
   menuContainer: {
     paddingTop: 20,
