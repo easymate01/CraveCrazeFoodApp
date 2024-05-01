@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240404164132_OrdersCartRelation")]
-    partial class OrdersCartRelation
+    [Migration("20240501110825_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -329,10 +329,7 @@ namespace Server.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerId1")
+                    b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -346,7 +343,7 @@ namespace Server.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("RestaurantId");
 
@@ -525,7 +522,7 @@ namespace Server.Migrations
 
                     b.HasOne("Server.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

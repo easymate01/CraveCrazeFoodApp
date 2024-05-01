@@ -29,6 +29,9 @@ ConfigureServices();
 ConfigureSwagger();
 
 var app = builder.Build();
+
+
+
 AddRoles();
 
 
@@ -59,11 +62,12 @@ app.Run();
 
 void ConfigureServices()
 {
+
+    builder.Services.AddDbContext<DataContext>();
     builder.Services.AddTransient<IRestaurant, RestaurantService>();
     builder.Services.AddTransient<IDish, DishService>();
 
     builder.Services.AddScoped<RestaurantService>();
-    builder.Services.AddDbContext<DataContext>();
 
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();

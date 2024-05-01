@@ -25,13 +25,14 @@ function HomeScreen() {
     setIsDrawerOpen(!isDrawerOpen);
   };
   useEffect(() => {
-    // fetchFeaturedData();
+    fetchFeaturedData();
   }, []);
 
   const fetchFeaturedData = async () => {
     try {
       const data = await getFeatured();
       setFeaturedData(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching featured data:", error);
     }
@@ -70,7 +71,7 @@ function HomeScreen() {
         <Categories />
 
         <View style={{ marginTop: 5 }}>
-          {[featured].map((item, index) => {
+          {featuredData.map((item, index) => {
             return (
               <FeaturedRow
                 key={index}
