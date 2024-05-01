@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { themeColors } from "../theme";
+import API_BASE_URL from "../config";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -8,9 +9,33 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleRegister = () => {
-    // Itt a regisztrációs logika meghívása
-    // Példa:
-    // register({ email, username, password });
+    fetch(`${API_BASE_URL}/Register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        username: username,
+        password: password,
+      }),
+    })
+      .then((res) => {
+        if (res.status !== 201) {
+          console.log("Registration error:", res);
+        } else if (res.status === 400) {
+          console.log(
+            "Username or email is already taken, or password is not valid."
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Registration response:", data);
+      })
+      .catch((error) => {
+        console.error("Registration error:", error.message);
+      });
   };
 
   return (

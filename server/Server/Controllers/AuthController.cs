@@ -16,7 +16,7 @@ namespace webapi.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
+        public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
         {
             if (!ModelState.IsValid)
             {
