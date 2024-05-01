@@ -32,6 +32,7 @@ const RegisterScreen = ({ navigation }) => {
       })
       .then((data) => {
         console.log("Registration response:", data);
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.error("Registration error:", error.message);

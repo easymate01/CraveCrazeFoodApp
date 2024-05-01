@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
-import { featured2 } from "../constants";
+import { featured, featured2 } from "../constants";
 import getFeatured from "../services/GetDatas/getFeatured";
 import CustomDrawerLayout from "../components/customDrawerLayout";
 
@@ -69,7 +69,7 @@ function HomeScreen() {
         <Categories />
 
         <View style={{ marginTop: 5 }}>
-          {[featured2].map((item, index) => {
+          {[featured, featured2].map((item, index) => {
             return (
               <FeaturedRow
                 key={index}
