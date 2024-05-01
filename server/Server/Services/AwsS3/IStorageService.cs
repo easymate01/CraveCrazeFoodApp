@@ -4,6 +4,6 @@ namespace Server.Services.AwsS3
 {
     public interface IStorageService
     {
-        Task<string> UploadImageAsync(IFormFile image, AwsCredentials awsCredentials, string bucketName);
+        Task<string> UploadImageAsync(IFormFile image, AwsCredentials awsCredentials, string folderName, string bucketName);
     }
 }

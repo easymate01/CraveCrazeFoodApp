@@ -7,7 +7,7 @@ namespace Server.Services.AwsS3
 {
     public class StorageService : IStorageService
     {
-        public async Task<string> UploadImageAsync(IFormFile image, AwsCredentials awsCredentials, string bucketName)
+        public async Task<string> UploadImageAsync(IFormFile image, AwsCredentials awsCredentials, string folderName, string bucketName)
         {
             var credentials = new BasicAWSCredentials(awsCredentials.AwsKey, awsCredentials.AwsSecret);
 
@@ -21,7 +21,7 @@ namespace Server.Services.AwsS3
                 var uploadRequest = new TransferUtilityUploadRequest()
                 {
                     InputStream = image.OpenReadStream(),
-                    Key = $"CategoriesPictures/{Guid.NewGuid()}{Path.GetExtension(image.FileName)}",
+                    Key = $"{folderName}/{Guid.NewGuid()}{Path.GetExtension(image.FileName)}",
                     BucketName = bucketName,
                     CannedACL = S3CannedACL.NoACL
                 };

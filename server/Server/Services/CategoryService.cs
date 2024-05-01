@@ -20,13 +20,14 @@ namespace Server.Services
 
         public async Task<Category> CreateCategoryAsync(Category category, S3Object obj)
         {
+            var folderName = "CategoriesPictures";
             var cred = new AwsCredentials()
             {
                 AwsKey = Environment.GetEnvironmentVariable("AWSAccessKey"),
                 AwsSecret = Environment.GetEnvironmentVariable("AWSSecretKey"),
 
             };
-            var imageUrl = await _storageService.UploadImageAsync(obj.ImageFile, cred, obj.BucketName);
+            var imageUrl = await _storageService.UploadImageAsync(obj.ImageFile, cred, folderName, obj.BucketName);
 
             var newCategory = new Category
             {
