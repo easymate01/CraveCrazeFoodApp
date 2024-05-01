@@ -69,7 +69,7 @@ function HomeScreen() {
         <Categories />
 
         <View style={{ marginTop: 5 }}>
-          {[featured, featured2].map((item, index) => {
+          {[featured, featuredData].map((item, index) => {
             return (
               <FeaturedRow
                 key={index}

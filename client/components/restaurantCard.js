@@ -38,14 +38,12 @@ export default function RestaurantCard({
           <Text style={styles.title}>{item.name}</Text>
           <View style={styles.rating}>
             <Text>
-              <Text className="text-green-700">{item.description}</Text>
-
-              <Text className="font-semibold text-gray-700">{item.text}</Text>
+              <Text style={styles.description}>{item.description}</Text>
             </Text>
           </View>
           <View style={styles.address}>
             <Icon.MapPin color="gray" width={15} height={15} />
-            <Text style={styles.address}>Nearby · {item.address}</Text>
+            <Text style={styles.addressText}>Nearby · {item.address}</Text>
           </View>
         </View>
       </View>
@@ -58,6 +56,8 @@ const styles = StyleSheet.create({
     marginRight: 6,
     backgroundColor: "white",
     borderRadius: 20,
+    maxWidth: 260,
+
     shadowColor: "rgba(0, 0, 0, 0.2)",
     shadowRadius: 7,
     shadowOffset: {
@@ -77,6 +77,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingTop: 8,
     paddingLeft: 12,
+  },
+  description: {
+    fontSize: 12,
+    color: "#4B5563",
+    maxWidth: 240,
   },
   rating: {
     flexDirection: "row",
@@ -106,6 +111,14 @@ const styles = StyleSheet.create({
     color: "#4B5563",
     paddingTop: 4,
     paddingLeft: 12,
+  },
+  addressText: {
+    fontSize: 12,
+    color: "#4B5563",
+    maxWidth: 200, // Limit the maximum width of the address
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
   mapPin: {
     height: 15,

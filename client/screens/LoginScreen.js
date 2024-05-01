@@ -1,13 +1,40 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { themeColors } from "../theme";
+import API_BASE_URL from "../config";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    fetch(`${API_BASE_URL}/Login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          console.log("An error occurred:", res);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Registration response:", data);
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        console.error("Registration error:", error.message);
+      });
+  };
 
   return (
     <View style={styles.container}>
