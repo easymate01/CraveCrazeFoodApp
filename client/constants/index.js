@@ -143,3 +143,24 @@ export const featured = {
     },
   ],
 };
+export const featured2 = {
+  id: 1,
+  title: "Hot and Spicy",
+  description: "soft and tender fried chicken",
+  restaurants: [
+    {
+      id: 1,
+      name: "Simons Burger",
+      image:
+        "https://imageproxy.wolt.com/menu/menu-images/634e6ee7874ccb7da322de86/1cc53cc4-c432-11ed-9d8c-aa256872df74_smallcheeseburger.jpeg",
+      description: "Serving high quality smash burgers, fries and shakes.",
+      lng: 0,
+      lat: 0,
+      address: "Vitkovics Mihály utca 8. 1052 Budapest",
+      stars: 5,
+      reviews: "string",
+      category: "",
+      dishes: [],
+    },
+  ],
+};

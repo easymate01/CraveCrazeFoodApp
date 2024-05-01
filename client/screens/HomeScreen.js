@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
-import { featured } from "../constants";
+import { featured2 } from "../constants";
 import getFeatured from "../services/GetDatas/getFeatured";
 import CustomDrawerLayout from "../components/customDrawerLayout";
 
@@ -32,7 +32,6 @@ function HomeScreen() {
     try {
       const data = await getFeatured();
       setFeaturedData(data);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching featured data:", error);
     }
@@ -59,7 +58,6 @@ function HomeScreen() {
         <CustomDrawerLayout
           isOpen={isDrawerOpen}
           onClose={toggleDrawer}
-          drawerContent={<Text>Ez egy szöveg a fiókban</Text>}
         ></CustomDrawerLayout>
       </View>
       <ScrollView
@@ -71,7 +69,7 @@ function HomeScreen() {
         <Categories />
 
         <View style={{ marginTop: 5 }}>
-          {featuredData.map((item, index) => {
+          {[featured2].map((item, index) => {
             return (
               <FeaturedRow
                 key={index}
