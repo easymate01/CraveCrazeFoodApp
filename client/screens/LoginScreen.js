@@ -3,13 +3,25 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { themeColors } from "../theme";
 import API_BASE_URL from "../config";
 import BasicButton from "../components/Buttons/Button";
+import { emailValidator } from "../services/Validators/emailValidator";
+import { passwordValidator } from "../services/Validators/passwordValidator";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState({ value: "", error: "" });
+  const [password, setPassword] = useState({ value: "", error: "" });
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+
+    if (emailError || passwordError) {
+      console.log("first");
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+    setLoading(true);
     fetch(`${API_BASE_URL}/Login`, {
       method: "POST",
       headers: {
@@ -21,20 +33,23 @@ const LoginScreen = ({ navigation }) => {
       }),
     })
       .then((res) => {
+        setLoading(false);
         if (res.status === 200) {
           return res.json();
         } else {
-          console.log("An error occurred:", res);
+          throw new Error("Failed to log in");
         }
-        return res.json();
       })
       .then((data) => {
         console.log("Registration response:", data);
         navigation.navigate("Home");
       })
       .catch((error) => {
+        setLoading(false);
         console.error("Registration error:", error.message);
+        alert("Failed to log in. Please try again later.");
       });
+    return;
   };
 
   return (
@@ -43,19 +58,34 @@ const LoginScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        label="Email"
+        returnKeyType="next"
+        value={email.value}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
+        error={!!email.error}
+        errorText={email.error}
+        autoCapitalize="none"
+        autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
       />
+      {email.error ? <Text style={styles.error}>{email.error}</Text> : null}
       <TextInput
         style={styles.input}
         placeholder="Password"
+        returnKeyType="done"
+        value={password.value}
+        onChangeText={(text) => setPassword({ value: text, error: "" })}
+        error={!!password.error}
+        errorText={password.error}
         secureTextEntry
-        value={password}
-        onChangeText={setPassword}
       />
+      {password.error ? (
+        <Text style={styles.error}>{password.error}</Text>
+      ) : null}
       <View style={styles.buttonContainer}>
         <BasicButton mode="contained" onPress={handleLogin}>
-          Login
+          {loading ? "Loading..." : "Login"}
         </BasicButton>
         <Button
           style={styles.button}
@@ -105,6 +135,10 @@ const styles = StyleSheet.create({
   continue: {
     position: "absolute",
     bottom: 60,
+  },
+  error: {
+    color: "red",
+    marginBottom: 5,
   },
 });
 export default LoginScreen;

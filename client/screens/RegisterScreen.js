@@ -91,6 +91,10 @@ const styles = StyleSheet.create({
   button: {
     color: themeColors.bgColor(1),
   },
+  error: {
+    color: "red",
+    marginBottom: 5,
+  },
 });
 
 export default RegisterScreen;
