@@ -22,14 +22,15 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     setLoading(true);
+    console.log(password);
     fetch(`${API_BASE_URL}/Login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email: email.value,
+        password: password.value,
       }),
     })
       .then((res) => {
@@ -41,12 +42,12 @@ const LoginScreen = ({ navigation }) => {
         }
       })
       .then((data) => {
-        console.log("Registration response:", data);
+        console.log("Login response:", data);
         navigation.navigate("Home");
       })
       .catch((error) => {
         setLoading(false);
-        console.error("Registration error:", error.message);
+        console.error("Login error:", error.message);
         alert("Failed to log in. Please try again later.");
       });
     return;

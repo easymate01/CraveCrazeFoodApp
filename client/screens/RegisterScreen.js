@@ -1,14 +1,26 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { themeColors } from "../theme";
 import API_BASE_URL from "../config";
+import BasicButton from "../components/Buttons/Button";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegister = () => {
+    setLoading(true);
+
     fetch(`${API_BASE_URL}/Register`, {
       method: "POST",
       headers: {
@@ -21,13 +33,13 @@ const RegisterScreen = ({ navigation }) => {
       }),
     })
       .then((res) => {
+        setLoading(false);
         if (res.status !== 201) {
           console.log("Registration error:", res);
-        } else if (res.status === 400) {
-          console.log(
-            "Username or email is already taken, or password is not valid."
-          );
+          setError("Registration failed. Please try again.");
+          alert("Registration failed. Please try again.");
         }
+        alert("Registration success. You can login now.");
         return res.json();
       })
       .then((data) => {
@@ -35,7 +47,10 @@ const RegisterScreen = ({ navigation }) => {
         navigation.navigate("Login");
       })
       .catch((error) => {
+        setLoading(false);
         console.error("Registration error:", error.message);
+        setError("Registration failed. Please try again.");
+        alert("Registration failed. Please try again.");
       });
   };
 
@@ -61,7 +76,10 @@ const RegisterScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button style title="Register" onPress={handleRegister} />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <BasicButton onPress={handleRegister} mode="contained" disabled={loading}>
+        {loading ? "Loading..." : "Register"}
+      </BasicButton>
       <Button
         title="Go to Login"
         onPress={() => navigation.navigate("Login")}
@@ -88,12 +106,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
-  button: {
-    color: themeColors.bgColor(1),
-  },
   error: {
     color: "red",
-    marginBottom: 5,
+    marginBottom: 10,
   },
 });
 
