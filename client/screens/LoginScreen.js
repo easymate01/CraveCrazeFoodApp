@@ -7,6 +7,7 @@ import { emailValidator } from "../services/Validators/emailValidator";
 import { passwordValidator } from "../services/Validators/passwordValidator";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "../slices/authSlice";
+import BackButton from "../components/Buttons/BackButton";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -58,6 +59,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}

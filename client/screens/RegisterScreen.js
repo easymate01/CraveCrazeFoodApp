@@ -10,6 +10,7 @@ import {
 import { themeColors } from "../theme";
 import API_BASE_URL from "../config";
 import BasicButton from "../components/Buttons/Button";
+import BackButton from "../components/Buttons/BackButton";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -56,6 +57,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Register</Text>
       <TextInput
         style={styles.input}

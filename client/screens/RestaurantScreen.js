@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setRestaurant } from "../slices/restaurantSlice";
+import BackButton from "../components/Buttons/BackButton";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
@@ -32,15 +33,7 @@ export default function RestaurantScreen() {
       >
         <View style={styles.container}>
           <Image style={styles.image} source={item.image} />
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Icon.ArrowLeft
-              strokeWidth={3}
-              stroke={themeColors.bgColor(1)}
-            ></Icon.ArrowLeft>
-          </TouchableOpacity>
+          <BackButton />
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.title}>{item.name}</Text>
