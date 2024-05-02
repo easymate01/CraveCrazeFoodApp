@@ -11,47 +11,57 @@ import { themeColors } from "../theme";
 import API_BASE_URL from "../config";
 import BasicButton from "../components/Buttons/Button";
 import BackButton from "../components/Buttons/BackButton";
+import { emailValidator } from "../services/Validators/emailValidator";
+import { passwordValidator } from "../services/Validators/passwordValidator";
+import { nameValidator } from "../services/Validators/nameValidator";
 
 const RegisterScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState({ value: "", error: "" });
+  const [username, setUsername] = useState({ value: "", error: "" });
+  const [password, setPassword] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleRegister = () => {
-    setLoading(true);
+    const emailError = emailValidator(email.value);
+    const usernameError = nameValidator(username.value);
+    const passwordError = passwordValidator(password.value);
 
+    if (emailError || usernameError || passwordError) {
+      setEmail({ ...email, error: emailError });
+      setUsername({ ...username, error: usernameError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+
+    setLoading(true);
     fetch(`${API_BASE_URL}/Register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password,
+        email: email.value,
+        username: username.value,
+        password: password.value,
       }),
     })
       .then((res) => {
         setLoading(false);
-        if (res.status !== 201) {
-          console.log("Registration error:", res);
+        if (res.status === 201) {
+          alert("Registration success", "You can login now.", [
+            { text: "OK", onPress: () => navigation.navigate("Login") },
+          ]);
+        } else {
           setError("Registration failed. Please try again.");
-          alert("Registration failed. Please try again.");
+          alert("Registration failed", "Please try again.");
         }
-        alert("Registration success. You can login now.");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Registration response:", data);
-        navigation.navigate("Login");
       })
       .catch((error) => {
         setLoading(false);
-        console.error("Registration error:", error.message);
         setError("Registration failed. Please try again.");
-        alert("Registration failed. Please try again.");
+        console.error("Registration error:", error);
+        alert("Error", "Registration failed. Please try again.");
       });
   };
 
@@ -62,23 +72,35 @@ const RegisterScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        value={email.value}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
+      {email.error ? <Text style={styles.error}>{email.error}</Text> : null}
+
       <TextInput
         style={styles.input}
         placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        value={username.value}
+        onChangeText={(text) => setUsername({ value: text, error: "" })}
+        autoCapitalize="none"
       />
+      {username.error ? (
+        <Text style={styles.error}>{username.error}</Text>
+      ) : null}
+
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        value={password.value}
+        onChangeText={(text) => setPassword({ value: text, error: "" })}
+        autoCapitalize="none"
       />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {password.error ? (
+        <Text style={styles.error}>{password.error}</Text>
+      ) : null}
       <BasicButton onPress={handleRegister} mode="contained" disabled={loading}>
         {loading ? "Loading..." : "Register"}
       </BasicButton>

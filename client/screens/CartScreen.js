@@ -43,16 +43,12 @@ export default function CartScreen() {
 
   const handlePlaceOrder = async () => {
     try {
-      const success = await placeOrder(cartItems);
-      if (success) {
-        Alert.alert("Success", "Your order has been placed successfully!");
+      // const success = await placeOrder(cartItems);
+      Alert.alert("Success", "Your order has been placed successfully!");
 
-        dispatch(emptyCart());
-
-        navigation.navigate("PreparingOrder");
-      }
+      //dispatch(emptyCart());
+      navigation.navigate("PreparingOrder");
     } catch (error) {
-      // Display an error message
       Alert.alert(
         "Error",
         "Failed to place your order. Please try again later."

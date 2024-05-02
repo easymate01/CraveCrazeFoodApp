@@ -11,10 +11,8 @@ export default function StartScreen({ navigation }) {
         source={require("../assets/images/bikeGuy.png")}
         style={styles.image}
       />
-      <Header>Login Template</Header>
-      <Paragraph>
-        The easiest way to start with your amazing application.
-      </Paragraph>
+      <Header>Welcome To CraveCraze!</Header>
+      <Paragraph>This is a food ordering application.</Paragraph>
       <BasicButton
         mode="contained"
         onPress={() => navigation.navigate("Login")}
