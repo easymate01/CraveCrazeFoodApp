@@ -11,6 +11,7 @@ import DeliveryScreen from "./screens/DeliveryScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import DrawerMenu from "./components/DrawerMenu";
+import StartScreen from "./screens/StartScreen";
 
 export default function Navigation() {
   return (
@@ -19,6 +20,7 @@ export default function Navigation() {
         initialRouteName="Welcome"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="Starter" component={StartScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
