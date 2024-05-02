@@ -71,7 +71,7 @@ export default function DeliveryScreen() {
               <View style={styles.imageContainer}>
                 <Image
                   style={styles.deliveryGuyImage}
-                  source={require("../assets/images/deliveryGuy.png")}
+                  // source={require("../assets/images/deliveryGuy.png")}
                 />
               </View>
               <View style={styles.deliveryGuyTextContainer}>
