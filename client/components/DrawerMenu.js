@@ -4,15 +4,21 @@ import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { useSelector } from "react-redux";
 import { selectCartItems, selectCartTotal } from "../slices/cartSlice";
+import { selectUser } from "../slices/authSlice";
 
-const CustomDrawerLayout = ({ isOpen, onClose, drawerContent }) => {
+const DrawerMenu = ({ isOpen, onClose }) => {
+  const cartItems = useSelector(selectCartTotal);
+  const user = useSelector(selectUser);
   const navigation = useNavigation();
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
     onClose();
   };
 
-  const cartItems = useSelector(selectCartTotal);
+  if (user) {
+    console.log(user.email);
+  }
+
   return (
     <Modal
       animationType="slide"
@@ -24,7 +30,9 @@ const CustomDrawerLayout = ({ isOpen, onClose, drawerContent }) => {
         <View style={styles.drawer}>
           <View style={styles.mainContent}>
             <View style={styles.ShoppingCartContainer}>
-              <Text style={styles.userName}>Gulyás Máté</Text>
+              <Text style={styles.userName}>
+                {user ? "Username: " + user.userName : "Login To See your name"}
+              </Text>
               <Icon.ShoppingCart
                 height="25"
                 stroke="gray"
@@ -152,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomDrawerLayout;
+export default DrawerMenu;

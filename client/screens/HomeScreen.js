@@ -15,7 +15,7 @@ import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
 import { featured, featured2 } from "../constants";
 import getFeatured from "../services/GetDatas/getFeatured";
-import CustomDrawerLayout from "../components/customDrawerLayout";
+import DrawerMenu from "../components/DrawerMenu";
 
 function HomeScreen() {
   const [featuredData, setFeaturedData] = useState([]);
@@ -55,10 +55,7 @@ function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        <CustomDrawerLayout
-          isOpen={isDrawerOpen}
-          onClose={toggleDrawer}
-        ></CustomDrawerLayout>
+        <DrawerMenu isOpen={isDrawerOpen} onClose={toggleDrawer}></DrawerMenu>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}

@@ -6,6 +6,7 @@ import BasicButton from "../components/Buttons/Button";
 import { emailValidator } from "../services/Validators/emailValidator";
 import { passwordValidator } from "../services/Validators/passwordValidator";
 import { useDispatch } from "react-redux";
+import { loginFailure, loginSuccess } from "../slices/authSlice";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -18,7 +19,6 @@ const LoginScreen = ({ navigation }) => {
     const passwordError = passwordValidator(password.value);
 
     if (emailError || passwordError) {
-      console.log("first");
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
@@ -44,13 +44,13 @@ const LoginScreen = ({ navigation }) => {
       })
       .then((data) => {
         console.log("Login response:", data);
-        dispatch(loginUserSuccess(data));
+        dispatch(loginSuccess(data));
         navigation.navigate("Home");
       })
       .catch((error) => {
         setLoading(false);
         console.error("Login error:", error.message);
-        dispatch(loginUserFailure(error.message));
+        dispatch(loginFailure(error.message));
         alert("Failed to log in. Please try again later.");
       });
     return;
