@@ -5,11 +5,13 @@ import API_BASE_URL from "../config";
 import BasicButton from "../components/Buttons/Button";
 import { emailValidator } from "../services/Validators/emailValidator";
 import { passwordValidator } from "../services/Validators/passwordValidator";
+import { useDispatch } from "react-redux";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     const emailError = emailValidator(email.value);
@@ -22,7 +24,6 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     setLoading(true);
-    console.log(password);
     fetch(`${API_BASE_URL}/Login`, {
       method: "POST",
       headers: {
@@ -43,11 +44,13 @@ const LoginScreen = ({ navigation }) => {
       })
       .then((data) => {
         console.log("Login response:", data);
+        dispatch(loginUserSuccess(data));
         navigation.navigate("Home");
       })
       .catch((error) => {
         setLoading(false);
         console.error("Login error:", error.message);
+        dispatch(loginUserFailure(error.message));
         alert("Failed to log in. Please try again later.");
       });
     return;
