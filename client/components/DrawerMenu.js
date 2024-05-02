@@ -7,7 +7,7 @@ import { selectCartItems, selectCartTotal } from "../slices/cartSlice";
 import { selectUser } from "../slices/authSlice";
 
 const DrawerMenu = ({ isOpen, onClose }) => {
-  const cartItems = useSelector(selectCartTotal);
+  const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectUser);
   const navigation = useNavigation();
   const navigateToScreen = (screenName) => {
@@ -15,9 +15,7 @@ const DrawerMenu = ({ isOpen, onClose }) => {
     onClose();
   };
 
-  if (user) {
-    console.log(user.email);
-  }
+  console.log(cartItems);
 
   return (
     <Modal
@@ -39,7 +37,7 @@ const DrawerMenu = ({ isOpen, onClose }) => {
                 onPress={() => navigateToScreen("Cart")}
               />
 
-              <Text>{cartItems}</Text>
+              <Text>{Object.keys(cartItems).length}</Text>
             </View>
 
             <View style={styles.menuContainer}>
