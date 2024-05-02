@@ -1,3 +1,5 @@
+import { DefaultTheme } from "react-native-paper";
+
 const pallete = [
   {
     // orange
@@ -32,4 +34,15 @@ const pallete = [
 ];
 export const themeColors = {
   ...pallete[1],
+};
+
+export const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    text: "#000000",
+    primary: "#560CCE",
+    secondary: "#414757",
+    error: "#f13a59",
+  },
 };

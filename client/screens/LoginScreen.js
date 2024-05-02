@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { themeColors } from "../theme";
 import API_BASE_URL from "../config";
+import BasicButton from "../components/Buttons/Button";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -53,7 +54,9 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setPassword}
       />
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Login" onPress={handleLogin} />
+        <BasicButton mode="contained" onPress={handleLogin}>
+          Login
+        </BasicButton>
         <Button
           style={styles.button}
           title="Go to Register"
@@ -89,7 +92,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: "80%",
     marginBottom: 10,
-    flexDirection: "row",
     justifyContent: "space-between",
   },
   button: {
