@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import { categories } from "../constants";
+import getCategories from "../services/GetDatas/getCategories";
 
 export default function Categories() {
+  const [categories, setCategories] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
+
+  useEffect(() => {
+    fetchFeaturedData();
+  }, []);
+
+  const fetchFeaturedData = async () => {
+    try {
+      const data = await getCategories();
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching featured data:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -29,7 +44,10 @@ export default function Categories() {
                 }
                 onPress={() => setActiveCategory(category.id)}
               >
-                <Image style={styles.image} source={category.image} />
+                <Image
+                  style={styles.image}
+                  source={{ uri: category.imageUrl }}
+                />
               </TouchableOpacity>
               <Text style={[styles.textStyle]}>{category.name}</Text>
             </View>
@@ -61,6 +79,7 @@ const styles = {
   },
   textStyle: {
     fontSize: 16,
+    textAlign: "center",
   },
   activeButtonStyle: {
     backgroundColor: "#3b3b3b",
