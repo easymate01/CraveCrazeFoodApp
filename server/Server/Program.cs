@@ -66,6 +66,7 @@ void ConfigureServices()
     builder.Services.AddDbContext<DataContext>();
     builder.Services.AddTransient<IRestaurant, RestaurantService>();
     builder.Services.AddTransient<IDish, DishService>();
+    builder.Services.AddTransient<IUser, UserService>();
 
     builder.Services.AddScoped<RestaurantService>();
 
