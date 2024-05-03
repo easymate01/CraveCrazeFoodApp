@@ -8,16 +8,23 @@ import {
   removeFromCart,
   selectCartItemsById,
 } from "../slices/cartSlice";
+import addItemToCart from "../services/Cart/addItemToCart";
 
 export default function DishRow({ item }) {
   const dispatch = useDispatch();
   const totalItems = useSelector((state) =>
     selectCartItemsById(state, item.id)
   );
-
   //Add item to cart
   const handleIncrement = () => {
+    const newQuantity = totalItems.length + 1;
+    // console.log(item.id + "Quantity: " + newQuantity);
     dispatch(addToCart({ ...item }));
+    // addItemToCart({
+    //   userId: "your_user_id_here",
+    //   dishId: item.id,
+    //   quantity: 1,
+    // });
   };
 
   const handleDecrement = () => {
