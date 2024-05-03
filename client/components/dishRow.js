@@ -23,7 +23,7 @@ export default function DishRow({ item }) {
   };
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={item.image} />
+      <Image style={styles.image} source={{ uri: item.image }} />
       <View style={styles.detailsContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{item.name}</Text>

@@ -99,7 +99,7 @@ export default function CartScreen() {
           return (
             <View key={key} style={styles.dishItem}>
               <Text style={styles.quantityText}>{items.length} x </Text>
-              <Image style={styles.dishImage} source={dish.image} />
+              <Image style={styles.dishImage} source={{ uri: dish.image }} />
               <Text style={styles.dishName}>{dish?.name}</Text>
               <Text style={styles.dishPrice}>${dish?.price}</Text>
               <TouchableOpacity
