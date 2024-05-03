@@ -57,7 +57,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
+            return Ok(new AuthResponse(result.IdentityUserId, result.Email, result.UserName, result.Token));
         }
 
 
