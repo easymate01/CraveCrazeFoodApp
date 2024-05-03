@@ -28,7 +28,7 @@ namespace Server.Controllers
         }
 
 
-        [HttpGet("/user{userName}")]
+        [HttpGet("/user/{userName}")]
         public async Task<ActionResult<IdentityUser>> GetUserByName(string userName)
         {
             var user = await _userService.GetUserByNameAsync(userName);
