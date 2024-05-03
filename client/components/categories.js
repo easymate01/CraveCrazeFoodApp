@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import getCategories from "../services/GetDatas/getCategories";
 
 export default function Categories() {
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
