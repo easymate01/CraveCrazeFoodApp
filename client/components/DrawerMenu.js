@@ -15,8 +15,6 @@ const DrawerMenu = ({ isOpen, onClose }) => {
     onClose();
   };
 
-  console.log(cartItems);
-
   return (
     <Modal
       animationType="slide"

@@ -32,7 +32,7 @@ export default function RestaurantCard({
       }}
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={item.image} />
+        <Image style={styles.image} source={{ uri: item.image }} />
 
         <View style={{ paddingBottom: 10 }}>
           <Text style={styles.title}>{item.name}</Text>
@@ -117,8 +117,6 @@ const styles = StyleSheet.create({
     color: "#4B5563",
     maxWidth: 200, // Limit the maximum width of the address
     overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
   },
   mapPin: {
     height: 15,

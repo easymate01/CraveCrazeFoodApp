@@ -32,7 +32,7 @@ export default function RestaurantScreen() {
         contentInset={{ bottom: 40 }}
       >
         <View style={styles.container}>
-          <Image style={styles.image} source={item.image} />
+          <Image style={styles.image} source={{ uri: item.image }} />
           <BackButton />
         </View>
         <View style={styles.infoContainer}>

@@ -13,27 +13,33 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
-import { featured, featured2 } from "../constants";
 import getFeatured from "../services/GetDatas/getFeatured";
 import DrawerMenu from "../components/DrawerMenu";
+import getAllRestaurants from "../services/GetDatas/getAllRestaurants";
 
 function HomeScreen() {
   const [featuredData, setFeaturedData] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
   useEffect(() => {
     fetchFeaturedData();
-  }, []);
+  }, [featuredData]);
 
   const fetchFeaturedData = async () => {
     try {
-      const data = await getFeatured();
-      setFeaturedData(data);
+      const featuredRestaurantsData = await getFeatured();
+      const restaurantsData = await getAllRestaurants();
+
+      setFeaturedData(featuredRestaurantsData);
+      setAllRestaurants(restaurantsData);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching featured data:", error);
+      setIsLoading(false);
     }
   };
 
@@ -66,16 +72,18 @@ function HomeScreen() {
         <Categories />
 
         <View style={{ marginTop: 5 }}>
-          {[featured].map((item, index) => {
-            return (
+          {isLoading ? (
+            <Text>Loading the restaurants...</Text>
+          ) : (
+            [featuredData].map((item, index) => (
               <FeaturedRow
                 key={index}
                 title={item.title}
                 restaurants={item.restaurants}
                 description={item.description}
               />
-            );
-          })}
+            ))
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
