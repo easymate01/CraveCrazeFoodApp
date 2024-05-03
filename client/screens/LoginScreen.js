@@ -44,7 +44,6 @@ const LoginScreen = ({ navigation }) => {
         }
       })
       .then((data) => {
-        console.log("Login response:", data);
         dispatch(loginSuccess(data));
         navigation.navigate("Home");
       })

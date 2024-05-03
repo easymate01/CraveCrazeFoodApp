@@ -1,13 +1,15 @@
+import { useSelector } from "react-redux";
 import API_BASE_URL from "../../config";
+import authSlice, { selectUser } from "../../slices/authSlice";
 
-const addItemToCart = async ({ userId, dishId, quantity }) => {
+const addItemToCart = async ({ id, dishId, quantity }) => {
   try {
     const payload = {
       dishId: dishId,
       quantity: quantity,
     };
 
-    const response = await fetch(`${API_BASE_URL}/Cart/${userId}/add-item`, {
+    const response = await fetch(`${API_BASE_URL}/Cart/${id}/add-item`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,9 +22,10 @@ const addItemToCart = async ({ userId, dishId, quantity }) => {
     }
 
     const data = await response.json();
+    console.log("added to cart");
     return data;
   } catch (error) {
-    console.error("Error fetching featured data:", error);
+    console.error("Error while adding data to cart:", error);
     throw error;
   }
 };

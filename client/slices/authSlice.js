@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "users",
+  name: "auth",
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
