@@ -27,7 +27,7 @@ function HomeScreen() {
   };
   useEffect(() => {
     fetchFeaturedData();
-  }, [featuredData]);
+  }, []);
 
   const fetchFeaturedData = async () => {
     try {
@@ -75,7 +75,7 @@ function HomeScreen() {
           {isLoading ? (
             <Text>Loading the restaurants...</Text>
           ) : (
-            [featuredData].map((item, index) => (
+            [featuredData, featuredData].map((item, index) => (
               <FeaturedRow
                 key={index}
                 title={item.title}

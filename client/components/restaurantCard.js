@@ -9,19 +9,7 @@ import React from "react";
 import * as Icon from "react-native-feather";
 import { useNavigation } from "@react-navigation/native";
 
-export default function RestaurantCard({
-  item,
-  //   title,
-  //   imgUrl,
-  //   rating,
-  //   type,
-  //   address,
-  //   description,
-  //   dishes,
-  //   reviews,
-  //   lng,
-  //   lat,
-}) {
+export default function RestaurantCard({ item }) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
