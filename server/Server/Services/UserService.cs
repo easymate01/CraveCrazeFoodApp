@@ -13,5 +13,15 @@ namespace Server.Services
             _userManager = userManager;
         }
 
+        public async Task<IdentityUser>? GetUserByNameAsync(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
     }
 }
