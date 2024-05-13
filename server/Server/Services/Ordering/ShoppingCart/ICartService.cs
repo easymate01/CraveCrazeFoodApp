@@ -10,6 +10,6 @@ namespace Server.Services.Ordering.ShoppingCart
         Task<Cart> CreateCartAsync(Cart cart);
         Task<bool> UpdateCartAsync(int id, Cart cart);
         Task<bool> DeleteCartAsync(int id);
-
+        Task<Cart> GetCartByIdentityUserId(string identityUserId);
     }
 }
