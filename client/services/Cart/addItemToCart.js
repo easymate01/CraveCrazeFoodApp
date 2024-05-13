@@ -2,13 +2,13 @@ import { useSelector } from "react-redux";
 import API_BASE_URL from "../../config";
 import authSlice, { selectUser } from "../../slices/authSlice";
 
-const addItemToCart = async ({ id, dishId, quantity }) => {
+const addItemToCart = async (id, dishId, quantity) => {
   try {
     const payload = {
       dishId: dishId,
       quantity: quantity,
     };
-
+    console.log(id);
     const response = await fetch(`${API_BASE_URL}/Cart/${id}/add-item`, {
       method: "POST",
       headers: {
