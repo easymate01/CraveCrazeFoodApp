@@ -13,13 +13,15 @@ namespace Server.Controllers
         private readonly ICartService _cartService;
         private readonly ICartItemService _cartItemService;
         private readonly IDish _dishService;
+        private readonly IUser _userService;
         private readonly DataContext _dbContext;
 
-        public CartController(ICartService cartService, ICartItemService cartItemService, IDish dishService, DataContext dataContext)
+        public CartController(ICartService cartService, ICartItemService cartItemService, IDish dishService, IUser userService, DataContext dataContext)
         {
             _cartService = cartService;
             _cartItemService = cartItemService;
             _dishService = dishService;
+            _userService = userService;
             _dbContext = dataContext;
         }
 
@@ -40,23 +42,23 @@ namespace Server.Controllers
             return Ok(cart);
         }
 
-        [HttpPost("{userId}/add-item")]
-        public async Task<ActionResult<Cart>> AddItemToCart(string userId, CartItemDto cartItem)
+        [HttpPost("{identityUserId}/add-item")]
+        public async Task<ActionResult<Cart>> AddItemToCart(string identityUserId, CartItemDto cartItem)
         {
-            var cart = await _cartService.GetCartByUserId(userId);
+
+            var customer = await _userService.GetCustomerByIdentityUserIdAsync(identityUserId);
+            if (customer == null)
+            {
+                return BadRequest($"Customer not found for identity user ID {identityUserId}");
+            }
+            var cart = await _cartService.GetCartByUserId(customer.Id);
 
             if (cart == null)
             {
                 cart = new Cart();
                 await _cartService.CreateCartAsync(cart);
 
-                // Frissítsd a Customer entitás CartId mezőjét
-                var customer = await _dbContext.Customers.FindAsync(userId);
-                if (customer == null)
-                {
-                    return BadRequest($"User with ID {userId} not found");
 
-                }
                 customer.CartId = cart.CartId;
                 await _dbContext.SaveChangesAsync();
             }

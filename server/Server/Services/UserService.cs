@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -13,10 +14,12 @@ namespace Server.Services
             _dbContext = dbContext;
             _userManager = userManager;
         }
+
         public async Task<IEnumerable<IdentityUser>?> GetAllUsersAsync()
         {
             return await _userManager.Users.ToListAsync();
         }
+
         public async Task<IdentityUser>? GetUserByNameAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -26,6 +29,17 @@ namespace Server.Services
             }
 
             return user;
+        }
+
+        public async Task<Customer>? GetCustomerByIdentityUserIdAsync(string IdentityUserId)
+        {
+            var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.IdentityUserId == IdentityUserId);
+            if (customer == null)
+            {
+                throw new Exception($"Customer with IdentityUserId '{IdentityUserId}' not found.");
+            }
+
+            return customer;
         }
 
         public async Task<IdentityUser> DeleteUser(string userId)
@@ -38,6 +52,7 @@ namespace Server.Services
             {
                 return null;
             }
+
             await _userManager.DeleteAsync(userToDelete);
 
             _dbContext.Users.Remove(dbContextUser);
