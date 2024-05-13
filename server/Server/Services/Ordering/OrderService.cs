@@ -8,10 +8,12 @@ namespace Server.Services.Ordering.Repository
     {
         private readonly DataContext _dbContext;
 
+        private readonly UserService _userService;
 
-        public OrderService(DataContext context)
+        public OrderService(DataContext context, UserService userService)
         {
             _dbContext = context;
+            _userService = userService;
         }
 
         public async Task<List<Order>> GetAllOrdersAsync()
@@ -32,10 +34,10 @@ namespace Server.Services.Ordering.Repository
 
         public async Task<Order> CreateOrderAsync(OrderDto orderDto)
         {
+            var customer = await _userService.GetCustomerByIdentityUserIdAsync(orderDto.IdentityUserId);
             if (orderDto == null)
                 throw new ArgumentNullException(nameof(orderDto));
 
-            var customer = await _dbContext.Customers.FindAsync(orderDto.CustomerId);
 
             if (customer == null)
                 throw new ArgumentException("Customer not found");
@@ -53,7 +55,7 @@ namespace Server.Services.Ordering.Repository
             var order = new Order
             {
                 RestaurantId = orderDto.RestaurantId,
-                CustomerId = orderDto.CustomerId,
+                CustomerId = customer.Id,
                 CartId = orderDto.CartId,
                 Date = DateTime.Now
             };

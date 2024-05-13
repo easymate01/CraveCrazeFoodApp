@@ -67,9 +67,9 @@ void ConfigureServices()
     builder.Services.AddTransient<IRestaurant, RestaurantService>();
     builder.Services.AddTransient<IDish, DishService>();
     builder.Services.AddTransient<IUser, UserService>();
-
     builder.Services.AddScoped<RestaurantService>();
 
+    builder.Services.AddScoped<UserService>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<IStorageService, StorageService>();
@@ -77,9 +77,6 @@ void ConfigureServices()
     builder.Services.AddScoped<ICartService, CartService>();
     builder.Services.AddScoped<ICartItemService, CartItemService>();
     builder.Services.AddScoped<IOrderService, OrderService>();
-
-
-
 
 }
 
