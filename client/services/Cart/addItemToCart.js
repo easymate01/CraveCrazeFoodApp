@@ -21,7 +21,6 @@ const addItemToCart = async (id, dishId, quantity) => {
     }
 
     const data = await response.json();
-    console.log("added to cart");
     return data;
   } catch (error) {
     console.error("Error while adding data to cart:", error);

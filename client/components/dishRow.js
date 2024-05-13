@@ -23,7 +23,7 @@ export default function DishRow({ item }) {
     const newQuantity = totalItems.length + 1;
     dispatch(addToCart({ ...item }));
 
-    addItemToCart(user.identityUserId, item.id, newQuantity);
+    const cart = addItemToCart(user.identityUserId, item.id, newQuantity);
   };
 
   const handleDecrement = () => {
