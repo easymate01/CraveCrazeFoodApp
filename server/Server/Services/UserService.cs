@@ -31,6 +31,12 @@ namespace Server.Services
             return user;
         }
 
+        public async Task<List<Customer>> GetAllCustomers()
+        {
+            return await _dbContext.Customers.ToListAsync();
+
+        }
+
         public async Task<Customer>? GetCustomerByIdentityUserIdAsync(string IdentityUserId)
         {
             var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.IdentityUserId == IdentityUserId);
