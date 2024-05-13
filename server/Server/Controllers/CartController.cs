@@ -42,6 +42,16 @@ namespace Server.Controllers
             return Ok(cart);
         }
 
+        [HttpGet("{IdentityUserId}")]
+        public async Task<ActionResult<Cart>> GetCartByIdentityUserId(string IdentityUserId)
+        {
+            var cart = await _cartService.GetCartByIdentityUserId(IdentityUserId);
+            if (cart == null)
+                return NotFound();
+
+            return Ok(cart);
+        }
+
         [HttpPost("{identityUserId}/add-item")]
         public async Task<ActionResult<Cart>> AddItemToCart(string identityUserId, CartItemDto cartItem)
         {
