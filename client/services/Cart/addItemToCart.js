@@ -8,7 +8,6 @@ const addItemToCart = async (id, dishId, quantity) => {
       dishId: dishId,
       quantity: quantity,
     };
-    console.log(id);
     const response = await fetch(`${API_BASE_URL}/Cart/${id}/add-item`, {
       method: "POST",
       headers: {

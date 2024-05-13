@@ -18,7 +18,7 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../slices/cartSlice";
-import placeOrder from "../services/Ordering/orderService";
+import { selectUser } from "../slices/authSlice";
 
 export default function CartScreen() {
   const [groupedItems, setGroupedItems] = useState({});
@@ -28,6 +28,7 @@ export default function CartScreen() {
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     const items = cartItems.reduce((group, item) => {
