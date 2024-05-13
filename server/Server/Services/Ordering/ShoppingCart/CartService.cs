@@ -73,11 +73,15 @@ namespace Server.Services.Ordering.ShoppingCart
 
         public async Task<Cart> GetCartByIdentityUserId(string identityUserId)
         {
-            var user = await _dbContext.Customers.FindAsync(identityUserId);
+            var user = await _dbContext.Customers.FirstOrDefaultAsync(c => c.IdentityUserId == identityUserId);
             if (user == null)
                 return null;
 
-            return await _dbContext.Carts.FirstOrDefaultAsync(c => c.CartId == user.CartId);
+            var cart = await _dbContext.Carts.Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.CartId == user.CartId);
+
+            return cart;
         }
+
     }
 }
