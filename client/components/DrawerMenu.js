@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { Modal, TouchableOpacity, View, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems, selectCartTotal } from "../slices/cartSlice";
-import { selectUser } from "../slices/authSlice";
+import { logout, selectUser } from "../slices/authSlice";
+import handleLogout from "../services/LogOut/logout";
+import useLogout from "../services/LogOut/logout";
 
 const DrawerMenu = ({ isOpen, onClose }) => {
   const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectUser);
   const navigation = useNavigation();
+  const logout = useLogout();
+
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
     onClose();
@@ -89,6 +93,14 @@ const DrawerMenu = ({ isOpen, onClose }) => {
                   <Icon.User style={styles.icons} height="25" stroke="gray" />
 
                   <Text style={styles.drawerLinkText}>My Orders</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.drawerLink} onPress={logout}>
+                <View style={styles.IconsContainer}>
+                  <Icon.LogOut style={styles.icons} height="25" stroke="gray" />
+
+                  <Text style={styles.drawerLinkText}>Log Out</Text>
                 </View>
               </TouchableOpacity>
             </View>
