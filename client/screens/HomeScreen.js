@@ -18,6 +18,7 @@ import DrawerMenu from "../components/DrawerMenu";
 import getAllRestaurants from "../services/GetDatas/getAllRestaurants";
 import PostList from "../components/Posts/postList";
 import BottomNavigation from "../components/BottomNavigation/bottomNavigation";
+import InviteCard from "../components/Cards/inviteCard";
 
 function HomeScreen() {
   const [featuredData, setFeaturedData] = useState([]);
@@ -71,6 +72,7 @@ function HomeScreen() {
           paddingBottom: 50,
         }}
       >
+        <InviteCard />
         <Categories />
         <PostList />
         <View style={{ marginTop: 5 }}>
