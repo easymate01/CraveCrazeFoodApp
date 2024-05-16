@@ -118,11 +118,18 @@ namespace Server.Controllers
         [HttpDelete("{id}/empty")]
         public async Task<IActionResult> EmptyCart(int id)
         {
-            var result = await _cartItemService.DeleteAllItemsInCartAsync(id);
-            if (!result)
-                return NotFound();
+            try
+            {
+                var result = await _cartItemService.DeleteAllItemsInCartAsync(id);
+                if (!result)
+                    return NotFound($"An error occurred while deleting items from cart {id}.");
 
-            return NoContent();
+                return Ok($"Cart with id: {id} is empty.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
+            }
         }
     }
 }
