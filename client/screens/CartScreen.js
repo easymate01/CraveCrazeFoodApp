@@ -14,11 +14,15 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
 import {
+  emptyCart,
   removeFromCart,
+  selectCartId,
   selectCartItems,
   selectCartTotal,
 } from "../slices/cartSlice";
 import { selectUser } from "../slices/authSlice";
+import placeOrder from "../services/Ordering/orderService";
+import emptyCartFromDb from "../services/Cart/emptyCart";
 
 export default function CartScreen() {
   const [groupedItems, setGroupedItems] = useState({});
@@ -29,6 +33,7 @@ export default function CartScreen() {
   const cartTotal = useSelector(selectCartTotal);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const cartId = useSelector(selectCartId);
 
   useEffect(() => {
     const items = cartItems.reduce((group, item) => {
@@ -44,16 +49,17 @@ export default function CartScreen() {
 
   const handlePlaceOrder = async () => {
     try {
-      // const success = await placeOrder(cartItems);
-      Alert.alert("Success", "Your order has been placed successfully!");
+      //1. Place Order
+      await placeOrder(restaurant.id, user.identityUserId, cartId);
 
-      //dispatch(emptyCart());
+      //2. Empty Cart
+      await emptyCartFromDb(cartId);
+      dispatch(emptyCart());
+      //3. Navigate to DeliveryScreen
       navigation.navigate("PreparingOrder");
+      Alert.alert("Order Placed Successfully!");
     } catch (error) {
-      Alert.alert(
-        "Error",
-        "Failed to place your order. Please try again later."
-      );
+      console.log(error);
     }
   };
   return (

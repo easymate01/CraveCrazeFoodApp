@@ -27,6 +27,14 @@ namespace Server.Controllers
             return Ok(users);
         }
 
+        [HttpGet("/customers"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<IEnumerable<IdentityUser>>> GetAllCostumers()
+        {
+            var users = await _userService.GetAllCustomers();
+
+            return Ok(users);
+        }
+
 
         [HttpGet("/user/{userName}")]
         public async Task<ActionResult<IdentityUser>> GetUserByName(string userName)
@@ -45,5 +53,6 @@ namespace Server.Controllers
             }
             return Ok(userToDelete);
         }
+
     }
 }

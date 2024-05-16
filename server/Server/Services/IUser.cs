@@ -9,6 +9,7 @@ namespace Server.Services
         Task<IEnumerable<IdentityUser>?> GetAllUsersAsync();
         Task<IdentityUser>? GetUserByNameAsync(string userName);
 
+        Task<List<Customer>> GetAllCustomers();
         Task<Customer>? GetCustomerByIdentityUserIdAsync(string IdentityUserId);
 
     }

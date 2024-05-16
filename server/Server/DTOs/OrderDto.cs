@@ -3,7 +3,7 @@
     public class OrderDto
     {
         public int RestaurantId { get; set; }
-        public string CustomerId { get; set; }
+        public string IdentityUserId { get; set; }
         public int CartId { get; set; }
 
     }
