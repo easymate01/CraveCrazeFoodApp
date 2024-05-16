@@ -10,5 +10,7 @@ namespace Server.Services.Ordering.ShoppingCart
         Task<bool> UpdateCartItemAsync(int id, CartItem cartItem);
         Task<bool> DeleteCartItemAsync(int id);
         Task<List<CartItem>> GetCartItemsByCartIdAsync(int cartId);
+
+        Task<bool> DeleteAllItemsInCartAsync(int cartId);
     }
 }

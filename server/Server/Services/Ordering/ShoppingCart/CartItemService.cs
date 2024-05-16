@@ -33,6 +33,11 @@ namespace Server.Services
                 .ToListAsync();
         }
 
+        public Task<bool> DeleteAllItemsInCartAsync(int cartId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<CartItem> CreateCartItemAsync(CartItem cartItem)
         {
             _dbContext.CartItems.Add(cartItem);
@@ -63,5 +68,6 @@ namespace Server.Services
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
     }
 }
