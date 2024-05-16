@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import API_BASE_URL from "../config";
 import { Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { Navigation } from "react-native-feather";
+import { useNavigation } from "@react-navigation/native";
 
-export default function CheckServerStatus({ navigation }) {
+export default function CheckServerStatus() {
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -15,7 +18,7 @@ export default function CheckServerStatus({ navigation }) {
           if (data.status === "ok") {
             console.log("Server is now listening.");
             setLoading(false);
-            navigation.navigate("Welcome");
+            navigation.navigate("Starter");
           }
         } else {
           console.error("Server returned an error:", response.status);

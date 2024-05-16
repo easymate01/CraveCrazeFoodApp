@@ -8,6 +8,7 @@ import { passwordValidator } from "../services/Validators/passwordValidator";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "../slices/authSlice";
 import BackButton from "../components/Buttons/BackButton";
+import saveUserToStorage from "../services/Login/saveUserToStorage";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -45,6 +46,7 @@ const LoginScreen = ({ navigation }) => {
       })
       .then((data) => {
         dispatch(loginSuccess(data));
+        saveUserToStorage(data);
         navigation.navigate("Home");
       })
       .catch((error) => {
