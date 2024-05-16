@@ -33,6 +33,29 @@ namespace Server.Services
                 .ToListAsync();
         }
 
+        public async Task<bool> DeleteAllItemsInCartAsync(int cartId)
+        {
+            try
+            {
+                var cartItems = await _dbContext.CartItems
+                    .Where(ci => ci.CartId == cartId)
+                    .ToListAsync();
+
+                if (cartItems != null && cartItems.Any())
+                {
+                    _dbContext.CartItems.RemoveRange(cartItems);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return false;
+            }
+        }
+
         public async Task<CartItem> CreateCartItemAsync(CartItem cartItem)
         {
             _dbContext.CartItems.Add(cartItem);
@@ -63,5 +86,6 @@ namespace Server.Services
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
     }
 }

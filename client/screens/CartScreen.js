@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
 import {
+  emptyCart,
   removeFromCart,
   selectCartId,
   selectCartItems,
@@ -21,6 +22,7 @@ import {
 } from "../slices/cartSlice";
 import { selectUser } from "../slices/authSlice";
 import placeOrder from "../services/Ordering/orderService";
+import emptyCartFromDb from "../services/Cart/emptyCart";
 
 export default function CartScreen() {
   const [groupedItems, setGroupedItems] = useState({});
@@ -51,8 +53,8 @@ export default function CartScreen() {
       await placeOrder(restaurant.id, user.identityUserId, cartId);
 
       //2. Empty Cart
+      await emptyCartFromDb(cartId);
       dispatch(emptyCart());
-
       //3. Navigate to DeliveryScreen
       navigation.navigate("PreparingOrder");
     } catch (error) {
