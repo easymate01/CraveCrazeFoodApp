@@ -23,8 +23,8 @@ export default function DishRow({ item }) {
   //Add item to cart
   const handleIncrement = async () => {
     const newQuantity = totalItems.length + 1;
-    const data = await addItemToCart(user.identityUserId, item.id, newQuantity);
     dispatch(addToCart({ ...item }));
+    const data = await addItemToCart(user.identityUserId, item.id, newQuantity);
     dispatch(setCartId(data.cartId));
   };
 

@@ -16,6 +16,8 @@ import FeaturedRow from "../components/featuredRow";
 import getFeatured from "../services/GetDatas/getFeatured";
 import DrawerMenu from "../components/DrawerMenu";
 import getAllRestaurants from "../services/GetDatas/getAllRestaurants";
+import PostList from "../components/Posts/postList";
+import BottomNavigation from "../components/BottomNavigation/bottomNavigation";
 
 function HomeScreen() {
   const [featuredData, setFeaturedData] = useState([]);
@@ -70,7 +72,7 @@ function HomeScreen() {
         }}
       >
         <Categories />
-
+        <PostList />
         <View style={{ marginTop: 5 }}>
           {isLoading ? (
             <Text>Loading the restaurants...</Text>
@@ -86,6 +88,7 @@ function HomeScreen() {
           )}
         </View>
       </ScrollView>
+      <BottomNavigation />
     </SafeAreaView>
   );
 }
