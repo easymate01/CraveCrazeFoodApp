@@ -7,23 +7,27 @@ import {
   addToCart,
   removeFromCart,
   selectCartItemsById,
+  setCartId,
 } from "../slices/cartSlice";
 import addItemToCart from "../services/Cart/addItemToCart";
 import { selectUser } from "../slices/authSlice";
 
 export default function DishRow({ item }) {
-  const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
+  const state = useSelector((state) => state);
+  console.log("State:", state, item.id);
   const totalItems = useSelector((state) =>
     selectCartItemsById(state, item.id)
   );
-  //Add item to cart
-  const handleIncrement = () => {
-    const newQuantity = totalItems.length + 1;
-    dispatch(addToCart({ ...item }));
 
-    const cart = addItemToCart(user.identityUserId, item.id, newQuantity);
+  //Add item to cart
+  const handleIncrement = async () => {
+    const newQuantity = totalItems.length + 1;
+    const data = await addItemToCart(user.identityUserId, item.id, newQuantity);
+    dispatch(addToCart(data.cartItems[0]));
+    dispatch(setCartId(data.cartId));
   };
 
   const handleDecrement = () => {

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import API_BASE_URL from "../../config";
 import authSlice, { selectUser } from "../../slices/authSlice";
 
@@ -21,6 +21,7 @@ const addItemToCart = async (id, dishId, quantity) => {
     }
 
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error("Error while adding data to cart:", error);

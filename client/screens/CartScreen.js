@@ -45,6 +45,7 @@ export default function CartScreen() {
   const handlePlaceOrder = async () => {
     try {
       console.log(restaurant);
+      // restaurant.id, identityId, cartId
       const success = await placeOrder(
         restaurant.id,
         user.identityUserId,
