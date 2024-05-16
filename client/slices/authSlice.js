@@ -17,10 +17,14 @@ const authSlice = createSlice({
       state.user = null;
       state.error = action.payload;
     },
+    logout: (state) => {
+      state.user = null;
+      state.error = null;
+    },
   },
 });
 
-export const { loginSuccess, loginFailure } = authSlice.actions;
+export const { loginSuccess, loginFailure, logout } = authSlice.actions;
 
 export const selectUser = (state) => state.auth.user;
 
