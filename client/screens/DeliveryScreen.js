@@ -13,7 +13,6 @@ export default function DeliveryScreen() {
   const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  console.log(restaurant.lat);
   const handleCancel = () => {
     navigation.navigate("Home");
     dispatch(emptyCart());

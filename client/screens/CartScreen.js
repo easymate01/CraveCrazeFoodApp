@@ -57,6 +57,7 @@ export default function CartScreen() {
       dispatch(emptyCart());
       //3. Navigate to DeliveryScreen
       navigation.navigate("PreparingOrder");
+      Alert.alert("Order Placed Successfully!");
     } catch (error) {
       console.log(error);
     }
