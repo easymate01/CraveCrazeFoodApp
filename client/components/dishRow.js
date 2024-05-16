@@ -16,8 +16,6 @@ export default function DishRow({ item }) {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state);
-  console.log("State:", state, item.id);
   const totalItems = useSelector((state) =>
     selectCartItemsById(state, item.id)
   );
@@ -26,7 +24,7 @@ export default function DishRow({ item }) {
   const handleIncrement = async () => {
     const newQuantity = totalItems.length + 1;
     const data = await addItemToCart(user.identityUserId, item.id, newQuantity);
-    dispatch(addToCart(data.cartItems[0]));
+    dispatch(addToCart({ ...item }));
     dispatch(setCartId(data.cartId));
   };
 
