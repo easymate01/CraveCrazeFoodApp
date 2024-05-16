@@ -1,7 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-const Stack = createNativeStackNavigator();
-import React from "react";
 
 import HomeScreen from "./screens/HomeScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
@@ -10,16 +8,19 @@ import PreparingOrder from "./screens/PreparingOrder";
 import DeliveryScreen from "./screens/DeliveryScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
-import DrawerMenu from "./components/DrawerMenu";
 import StartScreen from "./screens/StartScreen";
+import checkServerStatus from "./components/checkServerStatus";
+
+const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName="CheckServerStatus"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="CheckServerStatus" component={checkServerStatus} />
         <Stack.Screen name="Starter" component={StartScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
