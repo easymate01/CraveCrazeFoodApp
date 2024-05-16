@@ -47,16 +47,13 @@ export default function CartScreen() {
 
   const handlePlaceOrder = async () => {
     try {
-      // console.log("Id: ", restaurant.id);
-      // console.log("identityId: ", user.identityUserId);
-      // console.log("cartId: ", cartId);
-      console.log("placing order...");
-
+      //1. Place Order
       await placeOrder(restaurant.id, user.identityUserId, cartId);
 
-      Alert.alert("Success", "Your order has been placed successfully!");
+      //2. Empty Cart
+      dispatch(emptyCart());
 
-      //dispatch(emptyCart());
+      //3. Navigate to DeliveryScreen
       navigation.navigate("PreparingOrder");
     } catch (error) {
       console.log(error);

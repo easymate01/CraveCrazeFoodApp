@@ -13,7 +13,7 @@ export default function DeliveryScreen() {
   const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  console.log(restaurant.lat);
   const handleCancel = () => {
     navigation.navigate("Home");
     dispatch(emptyCart());
@@ -75,7 +75,7 @@ export default function DeliveryScreen() {
                 />
               </View>
               <View style={styles.deliveryGuyTextContainer}>
-                <Text style={styles.name}>Minta János</Text>
+                <Text style={styles.name}>James Deliver</Text>
                 <Text style={styles.role}>Your Rider</Text>
               </View>
               <View style={styles.actionButtonsContainer}>
