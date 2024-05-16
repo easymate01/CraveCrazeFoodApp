@@ -33,9 +33,27 @@ namespace Server.Services
                 .ToListAsync();
         }
 
-        public Task<bool> DeleteAllItemsInCartAsync(int cartId)
+        public async Task<bool> DeleteAllItemsInCartAsync(int cartId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cartItems = await _dbContext.CartItems
+                    .Where(ci => ci.CartId == cartId)
+                    .ToListAsync();
+
+                if (cartItems != null && cartItems.Any())
+                {
+                    _dbContext.CartItems.RemoveRange(cartItems);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return false;
+            }
         }
 
         public async Task<CartItem> CreateCartItemAsync(CartItem cartItem)

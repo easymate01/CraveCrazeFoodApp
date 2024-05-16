@@ -114,5 +114,15 @@ namespace Server.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}/empty")]
+        public async Task<IActionResult> EmptyCart(int id)
+        {
+            var result = await _cartItemService.DeleteAllItemsInCartAsync(id);
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
     }
 }
