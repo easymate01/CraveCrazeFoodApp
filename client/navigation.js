@@ -10,10 +10,31 @@ import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import StartScreen from "./screens/StartScreen";
 import checkServerStatus from "./components/checkServerStatus";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loginSuccess } from "./slices/authSlice";
 
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
+  const dispatch = useDispatch();
+
+  //Check if the user is logged in before from local storage.
+  useEffect(() => {
+    const loadUserFromStorage = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("userData");
+        if (userData) {
+          dispatch(loginSuccess(JSON.parse(userData)));
+        }
+      } catch (error) {
+        console.error("Error loading user data from AsyncStorage:", error);
+      }
+    };
+
+    loadUserFromStorage();
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator
