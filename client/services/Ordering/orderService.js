@@ -1,3 +1,5 @@
+import API_BASE_URL from "../../config";
+
 const placeOrder = async (restaurantId, identityUserId, cartId) => {
   try {
     const payload = {
@@ -5,6 +7,7 @@ const placeOrder = async (restaurantId, identityUserId, cartId) => {
       identityUserId: identityUserId,
       cartId: cartId,
     };
+    console.log(payload);
     const response = await fetch(`${API_BASE_URL}/Orders/CreateOrder`, {
       method: "POST",
       headers: {
@@ -21,6 +24,7 @@ const placeOrder = async (restaurantId, identityUserId, cartId) => {
     console.log("Order placed...");
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("Failed to place order");
   }
 };
