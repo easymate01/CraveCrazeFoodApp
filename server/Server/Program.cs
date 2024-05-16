@@ -57,6 +57,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// new endpoiint to check, if server status is ok.
+app.MapGet("/status", () => Results.Ok(new { status = "ok" }));
 app.Run();
 
 
