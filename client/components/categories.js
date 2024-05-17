@@ -60,7 +60,7 @@ export default function Categories() {
 
 const styles = {
   container: {
-    marginTop: 4,
+    marginTop: 20,
   },
   scrollView: {
     paddingHorizontal: 15,

@@ -72,6 +72,9 @@ function HomeScreen() {
           paddingBottom: 50,
         }}
       >
+        <View>
+          <Text style={styles.h1}>What would you like to eat?</Text>
+        </View>
         <InviteCard />
         <Categories />
         <PostList />
@@ -101,6 +104,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  h1: {
+    fontSize: 28,
+    fontWeight: "bold",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   searchBarContainer: {
     flexDirection: "row",

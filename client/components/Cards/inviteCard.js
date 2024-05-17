@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
   inviteButton: {
     flexDirection: "row",
     backgroundColor: "#4D2DBE",
+    padding: 20,
     borderRadius: 20,
-    paddingVertical: 10,
     paddingHorizontal: 20,
-    alignItems: "center",
+    alignSelf: "flex-start",
   },
   inviteButtonText: {
     color: "#FFFFFF",
